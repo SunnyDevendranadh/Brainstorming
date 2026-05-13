@@ -1,5 +1,8 @@
 # Brainstorming
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![No Build](https://img.shields.io/badge/build-none-brightgreen.svg)](#quick-start)
+
 An HTML-only brainstorming board for rapid ideation and project selection.
 
 ## Quick Start
