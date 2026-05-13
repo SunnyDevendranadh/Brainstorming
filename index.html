@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brainstorm Board</title>
+<style>
+  :root {
+    --bg: #0b0c0f;
+    --surface: #15171c;
+    --surface-hover: #1c1f26;
+    --border: #2a2d36;
+    --text: #e4e6eb;
+    --text-muted: #8b909e;
+    --accent: #58a6ff;
+    --accent-hover: #79b8ff;
+    --red: #f85149;
+    --yellow: #d29922;
+    --green: #3fb950;
+    --selected-glow: rgba(88, 166, 255, 0.15);
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  header h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  header h1 span {
+    color: var(--text-muted);
+    font-weight: 400;
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+  }
+  .btn {
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.45rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+  .btn:hover { background: var(--border); }
+  .btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .btn.primary:hover { background: var(--accent-hover); }
+  .btn.danger {
+    background: rgba(248, 81, 73, 0.1);
+    border-color: var(--red);
+    color: var(--red);
+  }
+  .btn.danger:hover { background: rgba(248, 81, 73, 0.2); }
+  .board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    padding: 1.5rem;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  @media (max-width: 1200px) {
+    .board { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .board { grid-template-columns: 1fr; }
+  }
+  .column {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+  }
+  .col-header {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .col-header h2 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .col-header .count {
+    background: var(--bg);
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .col-body {
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+  }
+  .add-btn {
+    margin-top: auto;
+    width: 100%;
+    padding: 0.5rem;
+    background: transparent;
+    border: 1px dashed var(--border);
+    color: var(--text-muted);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.15s;
+  }
+  .add-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(88, 166, 255, 0.05);
+  }
+  .card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.85rem;
+    cursor: grab;
+    position: relative;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .card:hover { border-color: #3f4450; }
+  .card.selected {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--selected-glow);
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+  }
+  .card-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    word-break: break-word;
+    flex: 1;
+    margin-right: 0.5rem;
+  }
+  .card-body {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    word-break: break-word;
+    white-space: pre-wrap;
+  }
+  .card-actions {
+    display: flex;
+    gap: 0.3rem;
+    margin-top: 0.6rem;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .card:hover .card-actions { opacity: 1; }
+  .card-actions button {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.7rem;
+  }
+  .card-actions button:hover { color: var(--text); background: var(--surface-hover); }
+  .priority {
+    display: flex;
+    gap: 0.25rem;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform 0.1s;
+  }
+  .dot:hover { transform: scale(1.3); }
+  .dot.red { background: var(--red); }
+  .dot.yellow { background: var(--yellow); }
+  .dot.green { background: var(--green); }
+  .dot.active { box-shadow: 0 0 0 2px var(--text); }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 480px;
+    padding: 1.25rem;
+  }
+  .modal h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  .modal input, .modal textarea, .modal select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.6rem 0.75rem;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+    outline: none;
+  }
+  .modal input:focus, .modal textarea:focus, .modal select:focus { border-color: var(--accent); }
+  .modal textarea { min-height: 100px; resize: vertical; }
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .selected-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.04em;
+  }
+
+  .empty-state {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    padding: 2rem 0;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Brainstorm Board <span id="session-date"></span></h1>
+  <div style="display:flex;gap:0.5rem;">
+    <button class="btn" onclick="exportArchive()">Export Archive</button>
+    <button class="btn danger" onclick="resetBoard()">Archive & Reset</button>
+  </div>
+</header>
+
+<div class="board" id="board"></div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3 id="modal-title">New Card</h3>
+    <input type="text" id="card-title" placeholder="Title">
+    <textarea id="card-body" placeholder="Notes, links, rough effort estimate..."></textarea>
+    <div style="margin-bottom:0.75rem;">
+      <label style="font-size:0.8rem;color:var(--text-muted);display:block;margin-bottom:0.35rem;">Priority</label>
+      <div class="priority" id="modal-priority">
+        <div class="dot red" data-p="red" onclick="setModalPriority('red')"></div>
+        <div class="dot yellow" data-p="yellow" onclick="setModalPriority('yellow')"></div>
+        <div class="dot green active" data-p="green" onclick="setModalPriority('green')"></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal()">Cancel</button>
+      <button class="btn primary" onclick="saveCard()">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const COLUMNS = [
+  { id: 'agents', name: 'Agent Harness' },
+  { id: 'training', name: 'AI / ML Training' },
+  { id: 'arxiv', name: 'Arxiv Research' },
+  { id: 'tools', name: 'Tools & Infrastructure' },
+  { id: 'experiments', name: 'Experiments' }
+];
+
+let cards = [];
+let editingId = null;
+let modalPriority = 'green';
+let currentCol = null;
+
+function load() {
+  const raw = localStorage.getItem('brainstorm-cards');
+  if (raw) cards = JSON.parse(raw);
+  document.getElementById('session-date').textContent = new Date().toLocaleDateString();
+  render();
+}
+
+function save() {
+  localStorage.setItem('brainstorm-cards', JSON.stringify(cards));
+  render();
+}
+
+function render() {
+  const board = document.getElementById('board');
+  board.innerHTML = '';
+  COLUMNS.forEach(col => {
+    const colCards = cards.filter(c => c.column === col.id);
+    const colEl = document.createElement('div');
+    colEl.className = 'column';
+    colEl.innerHTML = `
+      <div class="col-header">
+        <h2>${col.name}</h2>
+        <span class="count">${colCards.length}</span>
+      </div>
+      <div class="col-body" data-col="${col.id}">
+        ${colCards.length === 0 ? '<div class="empty-state">Drop ideas here</div>' : ''}
+        ${colCards.map(card => renderCard(card)).join('')}
+        <button class="add-btn" onclick="openModal('${col.id}')">+ Add idea</button>
+      </div>
+    `;
+    board.appendChild(colEl);
+  });
+}
+
+function renderCard(card) {
+  const pClass = card.priority || 'green';
+  const selected = card.selected ? `<div class="selected-badge">Selected</div>` : '';
+  return `
+    <div class="card ${card.selected ? 'selected' : ''}" draggable="true" data-id="${card.id}" ondragstart="dragStart(event, '${card.id}')">
+      ${selected}
+      <div class="card-header">
+        <div class="card-title">${escapeHtml(card.title)}</div>
+        <div class="priority">
+          <div class="dot red ${pClass==='red'?'active':''}" onclick="setPriority('${card.id}','red')"></div>
+          <div class="dot yellow ${pClass==='yellow'?'active':''}" onclick="setPriority('${card.id}','yellow')"></div>
+          <div class="dot green ${pClass==='green'?'active':''}" onclick="setPriority('${card.id}','green')"></div>
+        </div>
+      </div>
+      <div class="card-body">${escapeHtml(card.body)}</div>
+      <div class="card-actions">
+        <button onclick="selectProject('${card.id}')">Select</button>
+        <button onclick="openEdit('${card.id}')">Edit</button>
+        <button onclick="deleteCard('${card.id}')">Delete</button>
+      </div>
+    </div>
+  `;
+}
+
+function escapeHtml(t) {
+  const d = document.createElement('div');
+  d.textContent = t;
+  return d.innerHTML;
+}
+
+function openModal(col) {
+  currentCol = col;
+  editingId = null;
+  document.getElementById('modal-title').textContent = 'New Idea';
+  document.getElementById('card-title').value = '';
+  document.getElementById('card-body').value = '';
+  setModalPriority('green');
+  document.getElementById('modal').classList.add('open');
+}
+
+function openEdit(id) {
+  const card = cards.find(c => c.id === id);
+  if (!card) return;
+  editingId = id;
+  currentCol = card.column;
+  document.getElementById('modal-title').textContent = 'Edit Idea';
+  document.getElementById('card-title').value = card.title;
+  document.getElementById('card-body').value = card.body;
+  setModalPriority(card.priority || 'green');
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+function setModalPriority(p) {
+  modalPriority = p;
+  document.querySelectorAll('#modal-priority .dot').forEach(d => {
+    d.classList.toggle('active', d.dataset.p === p);
+  });
+}
+
+function saveCard() {
+  const title = document.getElementById('card-title').value.trim();
+  const body = document.getElementById('card-body').value.trim();
+  if (!title) return;
+  if (editingId) {
+    const card = cards.find(c => c.id === editingId);
+    card.title = title;
+    card.body = body;
+    card.priority = modalPriority;
+  } else {
+    cards.push({
+      id: crypto.randomUUID(),
+      column: currentCol,
+      title,
+      body,
+      priority: modalPriority,
+      selected: false
+    });
+  }
+  save();
+  closeModal();
+}
+
+function deleteCard(id) {
+  cards = cards.filter(c => c.id !== id);
+  save();
+}
+
+function setPriority(id, p) {
+  const card = cards.find(c => c.id === id);
+  if (card) { card.priority = p; save(); }
+}
+
+function selectProject(id) {
+  cards.forEach(c => c.selected = (c.id === id));
+  save();
+}
+
+function dragStart(e, id) {
+  e.dataTransfer.setData('text/plain', id);
+}
+
+document.addEventListener('dragover', e => {
+  e.preventDefault();
+});
+
+document.addEventListener('drop', e => {
+  const id = e.dataTransfer.getData('text/plain');
+  const colEl = e.target.closest('.col-body');
+  if (!colEl || !id) return;
+  const colId = colEl.dataset.col;
+  const card = cards.find(c => c.id === id);
+  if (card && card.column !== colId) {
+    card.column = colId;
+    save();
+  }
+});
+
+function exportArchive() {
+  const date = new Date().toISOString().slice(0,10);
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Brainstorm Archive ${date}</title>
+<style>
+body{background:#0b0c0f;color:#e4e6eb;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:2rem;max-width:900px;margin:0 auto;line-height:1.6}
+h1{font-size:1.4rem;border-bottom:1px solid #2a2d36;padding-bottom:0.5rem}
+.card{background:#15171c;border:1px solid #2a2d36;border-radius:8px;padding:1rem;margin:1rem 0}
+.card h3{margin:0 0 0.25rem;font-size:1rem}
+.card p{color:#8b909e;margin:0;white-space:pre-wrap}
+.meta{font-size:0.75rem;color:#8b909e;margin-top:0.5rem}
+.selected{border-color:#58a6ff;box-shadow:0 0 0 3px rgba(88,166,255,0.15)}
+</style></head>
+<body>
+<h1>Brainstorm Archive — ${date}</h1>
+${COLUMNS.map(col => {
+  const cs = cards.filter(c => c.column === col.id);
+  if (!cs.length) return '';
+  return `<h2>${col.name}</h2>` + cs.map(c => `
+<div class="card ${c.selected?'selected':''}">
+  <h3>${c.selected?'[SELECTED] ':''}${escapeHtml(c.title)}</h3>
+  <p>${escapeHtml(c.body)}</p>
+  <div class="meta">Priority: ${c.priority || 'green'}</div>
+</div>`).join('');
+}).join('')}
+</body></html>`;
+  const blob = new Blob([html], {type: 'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `brainstorm-archive-${date}.html`;
+  a.click();
+}
+
+function resetBoard() {
+  if (!confirm('Archive current session and reset to zero?')) return;
+  exportArchive();
+  cards = [];
+  localStorage.removeItem('brainstorm-cards');
+  render();
+}
+
+load();
+</script>
+</body>
+</html>
