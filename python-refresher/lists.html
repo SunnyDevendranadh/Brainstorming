@@ -1,0 +1,1371 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Python Lists</title><style>
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(760px,100% - 32px);margin:64px auto 96px}
+
+.iso-page{width:min(760px,100% - 32px)}
+h1,h2,h3,h4{color:var(--anatomy-strong);font-weight:600;letter-spacing:-.01em}
+h1{font-size:30px;line-height:1.2;margin:8px 0 12px}
+h2{font-size:22px;margin:72px 0 14px;display:flex;align-items:center;gap:12px}
+h2 span,.toc span{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;box-shadow:0 0 0 1px var(--anatomy-mid);font:600 13px var(--anatomy-mono);color:var(--anatomy-strong)}
+h3{font-size:16px;margin:30px 0 8px}
+h4{font-size:13px;margin:0 0 8px;text-transform:uppercase;letter-spacing:.1em;color:var(--anatomy-muted)}
+p,li{color:var(--anatomy-text)}
+b{color:var(--anatomy-strong);font-weight:600}
+a{color:var(--anatomy-strong)}
+code,pre{font-family:var(--anatomy-mono)}
+code{font-size:.92em;color:var(--anatomy-strong);background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-faint);padding:1px 5px;border-radius:4px;white-space:nowrap}
+.top{position:relative}
+.kicker{font:12px var(--anatomy-mono);text-transform:uppercase;letter-spacing:.12em;color:var(--anatomy-muted);margin:0}
+.lede{font-size:15.5px;max-width:62ch}
+.toc{display:flex;flex-wrap:wrap;gap:8px 18px;margin:22px 0 0}
+.toc a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--anatomy-text);font-size:14px}
+.toc a:hover{color:var(--anatomy-strong)}
+.toc span{width:22px;height:22px;font-size:11px}
+.theme{position:absolute;top:0;right:0;background:none;border:0;box-shadow:0 0 0 1px var(--anatomy-mid);color:var(--anatomy-text);font:12px var(--anatomy-mono);padding:6px 10px;border-radius:6px;cursor:pointer}
+.ex{margin:14px 0 18px;box-shadow:0 0 0 1px var(--anatomy-faint);border-radius:8px;overflow:hidden}
+pre{margin:0;padding:14px 16px;font-size:13px;line-height:1.6;overflow-x:auto;background:var(--anatomy-card);color:var(--anatomy-strong)}
+pre.run{background:var(--anatomy-page);color:var(--anatomy-text);border-top:1px solid var(--anatomy-faint);white-space:pre}
+.run-label,.console span{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.12em;color:var(--anatomy-muted);margin-bottom:4px}
+.py .k{color:var(--py-k)}.py .s{color:var(--py-s)}.py .n{color:var(--py-n)}.py .c{color:var(--anatomy-muted);font-style:italic}.py .b{color:var(--py-b)}
+.iso{--py-k:#c4a7ff;--py-s:#9fe0b4;--py-n:#ffc58a;--py-b:#8ec5ff;--hot:#ffffff10}
+.iso[data-theme="light"]{--py-k:#7a3fd1;--py-s:#1f7a45;--py-n:#b45a00;--py-b:#1d5fbf;--hot:#0000000b}
+.tbl{border-collapse:collapse;width:100%;margin:12px 0 18px;font-size:13.5px}
+.tbl th,.tbl td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--anatomy-faint);color:var(--anatomy-text)}
+.tbl th{color:var(--anatomy-muted);font-weight:500;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.trap,.you{margin:18px 0;padding:12px 14px;border-left:2px solid var(--anatomy-mid);background:var(--anatomy-card);color:var(--anatomy-text);font-size:14px}
+.you{border-left-color:var(--py-n)}
+.quiz{margin:26px 0 8px;padding:16px;box-shadow:0 0 0 1px var(--anatomy-faint);border-radius:8px}
+.quiz details{border-top:1px solid var(--anatomy-faint);padding:9px 0}
+.quiz details:first-of-type{border-top:0}
+.quiz summary{cursor:pointer;color:var(--anatomy-strong)}
+.quiz details div{padding:8px 0 2px 18px;color:var(--anatomy-text)}
+.iso-figure{margin:22px 0 0}
+.code-panel{margin:0 0 30px;padding:14px;box-shadow:0 0 0 1px var(--anatomy-faint);border-top:0;background:var(--anatomy-card);display:grid;gap:12px}
+.code-panel pre{padding:10px 12px;background:var(--anatomy-page);border-radius:6px}
+.code-panel [data-line]{display:inline-block;width:100%;padding:0 6px;margin:0 -6px;border-radius:3px;color:var(--anatomy-text);transition:background .2s,color .2s}
+.code-panel [data-line][data-done]{color:var(--anatomy-muted)}
+.code-panel [data-line][data-on]{background:var(--hot);color:var(--anatomy-strong);box-shadow:inset 2px 0 0 var(--anatomy-lit)}
+.vars{display:flex;flex-wrap:wrap;gap:8px}
+.var{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;box-shadow:0 0 0 1px var(--anatomy-faint);border-radius:6px;font:13px var(--anatomy-mono)}
+.var-name{color:var(--anatomy-muted)}
+.var b{color:var(--anatomy-strong);min-width:2ch}
+.var b[data-on]{color:var(--anatomy-lit)}
+.steps,.tabs,.ab{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.code-panel button{background:var(--anatomy-page);color:var(--anatomy-strong);border:0;box-shadow:0 0 0 1px var(--anatomy-mid);padding:7px 12px;border-radius:6px;font:13px var(--anatomy-mono);cursor:pointer;min-height:36px}
+.code-panel button:hover{box-shadow:0 0 0 1px var(--anatomy-hi)}
+.code-panel button[aria-selected="true"]{box-shadow:0 0 0 1.5px var(--anatomy-lit)}
+.ab span{font:14px var(--anatomy-mono);color:var(--anatomy-text);margin-left:6px}
+.ab b{color:var(--anatomy-strong)}
+.ops{border-collapse:collapse;width:100%;font-size:13px}
+.ops td{padding:5px 8px;border-bottom:1px solid var(--anatomy-faint);color:var(--anatomy-text)}
+.ops td:nth-child(2){font-family:var(--anatomy-mono);color:var(--anatomy-strong);white-space:nowrap}
+.ops tr[data-hot] td{background:var(--hot)}
+.ops code{box-shadow:none;background:none;padding:0}
+.score{display:flex;align-items:center;gap:12px;font:13px var(--anatomy-mono);color:var(--anatomy-text)}
+.score input{flex:1;accent-color:var(--anatomy-hi)}
+.score b{min-width:3ch;color:var(--anatomy-strong)}
+.console pre{min-height:3.2em;white-space:pre-wrap}
+.fix{margin:22px 0 34px}
+.fix header{display:flex;align-items:baseline;gap:12px}
+.fix h3{margin:0}
+.tag{font:11px var(--anatomy-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--anatomy-muted)}
+.wrong{margin:8px 0}
+.note{font-size:13.5px;color:var(--anatomy-muted)}
+.ok{display:inline-block;margin:2px 6px 2px 0;padding:2px 8px;border-radius:999px;box-shadow:0 0 0 1px var(--anatomy-faint);font-size:13px;color:var(--anatomy-strong)}
+.end{margin-top:30px}
+@media (max-width:560px){h1{font-size:24px}.theme{position:static;margin-top:16px}.ops td:nth-child(3){display:none}}
+
+.iso{--cp-ex:#8ec5ff;--cp-for:#c4a7ff;--cp-if:#ffc58a}
+.iso[data-theme="light"]{--cp-ex:#1d5fbf;--cp-for:#7a3fd1;--cp-if:#b45a00}
+.cp-ex{color:var(--cp-ex)}.cp-for{color:var(--cp-for)}.cp-if{color:var(--cp-if)}
+.comp{font-size:14px}
+.anatomy{margin:16px 0 20px;padding:18px;box-shadow:0 0 0 1px var(--anatomy-faint);border-radius:8px;background:var(--anatomy-card)}
+.an-code{font:600 19px var(--anatomy-mono);color:var(--anatomy-strong);margin-bottom:14px;overflow-x:auto;white-space:nowrap}
+.an-b{color:var(--anatomy-muted)}
+.an-parts{display:grid;gap:8px;font-size:14px;color:var(--anatomy-text)}
+.an-parts .sw{display:inline-block;min-width:96px;font:600 12.5px var(--anatomy-mono)}
+.sol summary{cursor:pointer;color:var(--anatomy-strong);margin:4px 0}
+.tabs code{background:none;box-shadow:none;padding:0}
+.console pre [data-line],.console pre span{display:inline-block;width:100%;font-size:13px;text-transform:none;letter-spacing:0;margin:0 -6px;color:var(--anatomy-text)}
+.console pre [data-line][data-on]{color:var(--anatomy-strong)}
+.console pre.comp span{display:inline;width:auto;margin:0;font-size:inherit}
+.console pre.comp .cp-ex{color:var(--cp-ex)}.console pre.comp .cp-for{color:var(--cp-for)}.console pre.comp .cp-if{color:var(--cp-if)}
+@media (max-width:560px){.an-code{font-size:15px}.an-parts .sw{display:block}}
+</style></head><body class="iso" data-theme="dark"><main class="iso-page">
+<header class="top">
+  <p class="kicker">Python · lesson 6</p>
+  <h1>Lists and list comprehensions</h1>
+  <p class="lede">One name, many values. This page covers making lists, reading them by index and slice, changing them, looping over them, and building new ones in one line with a comprehension. Every figure is drawn from real Python: the blocks are the items, the numbers in front of them are their indices, and the tags are variable names. Every output shown was produced by Python 3.13.</p>
+  <nav class="toc"><a href="#lists"><span>1</span>What a list is</a><a href="#change"><span>2</span>Changing a list</a><a href="#loop"><span>3</span>Looping over a list</a><a href="#comprehension"><span>4</span>List comprehension</a><a href="#practice"><span>✎</span>Practice</a></nav>
+  <button type="button" class="theme" data-theme-toggle aria-label="Switch light or dark">◐ Theme</button>
+</header>
+<section id="lists"><h2><span>1</span>What a list is</h2>
+<p>So far each variable held one value. A <b>list</b> holds many values, <b>in order</b>, under one name. You write it with square brackets and commas.</p>
+<div class="ex"><pre class="py">nums = [<span class="n">7</span>, <span class="n">3</span>, <span class="n">9</span>, <span class="n">4</span>, <span class="n">1</span>]
+names = [<span class="s">"Ada"</span>, <span class="s">"Linus"</span>, <span class="s">"Grace"</span>]
+mixed = [<span class="n">42</span>, <span class="s">"hi"</span>, <span class="n">3.5</span>, <span class="k">True</span>]   <span class="c"># any types, even mixed</span>
+empty = []
+
+<span class="b">print</span>(<span class="b">len</span>(nums))     <span class="c"># how many items</span>
+<span class="b">print</span>(<span class="n">9</span> <span class="k">in</span> nums)     <span class="c"># is 9 somewhere in the list?</span>
+<span class="b">print</span>(<span class="b">list</span>(<span class="s">"abc"</span>))   <span class="c"># a string split into its characters</span></pre><pre class="run"><span class="run-label">Output</span>5
+True
+['a', 'b', 'c']</pre></div>
+<h3>Index: one item</h3>
+<p>Every item has a position called its <b>index</b>, and counting starts at <b>0</b>. So the first item is <code>nums[0]</code> and the last of 5 is <code>nums[4]</code>. Negative indices count from the end: <code>nums[-1]</code> is always the last item.</p>
+<h3>Slice: a piece of the list</h3>
+<p><code>nums[start:stop:step]</code> works exactly like <code>range(start, stop, step)</code>: it starts at start, stops <b>before</b> stop, and moves by step. Leave a number out to mean "from the beginning", "to the end" or "every item". A slice is a <b>new list</b>; nums does not change.</p>
+<div data-fig="l-index"><figure class="iso-figure"><div class="iso-plate"><div class="iso-plate-corners" aria-hidden="true"><span class="iso-plate-corner" data-corner="fig">Fig 1</span><span class="iso-plate-corner" data-corner="title">Index and slice</span><span class="iso-plate-corner" data-corner="hint">Pick an expression below, or press ← →</span><span class="iso-plate-corner" data-corner="readout" data-readout>nums[0] → 7</span></div><div class="iso-stage" tabindex="0" role="group" aria-label="Indexing figure: left and right arrows pick an expression"><svg xmlns="http://www.w3.org/2000/svg" class="iso-svg" viewBox="0 0 600 360" role="img" aria-label="The list nums = [7, 3, 9, 4, 1] drawn as a tray of five slots, each holding a block with its value on top. Index numbers 0 to 4 are written in front of the slots, with the negative indices -5 to -1 below them. Picking an index lifts one block and brings its value forward; a slice brings the picked blocks forward into a new tray."><g class="iso-solid"><path class="iso-fill" d="M162.1 69.2L162.7 68L175.3 55.8L176.8 54.9L178.9 54.6L181.1 54.9L254 78.5L255.6 79.4L256.1 80.5L256.1 84L255.6 85.2L242.9 97.5L241.4 98.3L239.3 98.6L237.2 98.3L164.2 74.8L162.7 73.9L162.1 72.7Z"/><path class="iso-shade" data-shade="0" d="M256.1 84L255.6 85.2L255.6 81.7L256.1 80.5ZM255.6 85.2L242.9 97.5L242.9 94L255.6 81.7ZM242.9 97.5L241.4 98.3L241.4 94.8L242.9 94Z"/><path class="iso-shade" data-shade="1" d="M241.4 98.3L239.3 98.6L239.3 95.1L241.4 94.8Z"/><path class="iso-shade" data-shade="2" d="M239.3 98.6L237.2 98.3L237.2 94.8L239.3 95.1Z"/><path class="iso-shade" data-shade="3" d="M237.2 98.3L164.2 74.8L164.2 71.3L237.2 94.8ZM164.2 74.8L162.7 73.9L162.7 70.4L164.2 71.3ZM162.7 73.9L162.1 72.7L162.1 69.2L162.7 70.4Z"/><path class="iso-top" d="M254 78.5L255.6 79.4L256.1 80.5L255.6 81.7L242.9 94L241.4 94.8L239.3 95.1L237.2 94.8L164.2 71.3L162.7 70.4L162.1 69.2L162.7 68L175.3 55.8L176.8 54.9L178.9 54.6L181.1 54.9Z"/><path class="iso-line iso-crease" data-tone="faint" d="M256.1 80.5L255.6 81.7L242.9 94L241.4 94.8L239.3 95.1L237.2 94.8L164.2 71.3L162.7 70.4L162.1 69.2"/><path class="iso-line iso-bevel" data-tone="faint" d="M256.1 80.5L254.6 81.5L242.1 93.6L240.9 94.3L239.3 94.5L237.6 94.3L164.8 70.8L163.6 70.1L162.1 69.2"/><path class="iso-line iso-edge" data-tone="mid" d="M162.1 69.2L162.7 68L175.3 55.8L176.8 54.9L178.9 54.6L181.1 54.9L254 78.5L255.6 79.4L256.1 80.5M256.1 84L255.6 85.2L242.9 97.5L241.4 98.3L239.3 98.6L237.2 98.3L164.2 74.8L162.7 73.9L162.1 72.7M256.1 80.5L256.1 84M162.1 69.2L162.1 72.7"/></g><text class="iso-face-text" data-tone="hi" transform="matrix(1.824 0.589 -1.053 1.02 206.836 77.085)" font-size="6" text-anchor="middle">nums =</text><g data-part="src-tray"><path class="iso-halo" d="M233 124.8L279.3 79.9L542 164.7L542 171.7L495.7 216.5L233 131.7Z"/><g class="iso-solid"><path class="iso-fill" d="M226.7 124.3L227.5 123L273.9 78.1L275.5 77.1L277.7 76.5L280.2 76.4L282.5 76.8L545.2 161.6L547 162.5L548.1 163.8L548.3 165.1L548.3 172.1L547.5 173.4L501.1 218.3L499.5 219.3L497.3 220L494.8 220L492.5 219.6L229.9 134.8L228 133.9L226.9 132.7L226.7 131.3Z"/><path class="iso-shade" data-shade="0" d="M548.3 172.1L547.5 173.4L547.5 166.4L548.3 165.1ZM547.5 173.4L501.1 218.3L501.1 211.3L547.5 166.4ZM501.1 218.3L499.5 219.3L499.5 212.4L501.1 211.3Z"/><path class="iso-shade" data-shade="1" d="M499.5 219.3L497.3 220L497.3 213L499.5 212.4ZM497.3 220L494.8 220L494.8 213.1L497.3 213Z"/><path class="iso-shade" data-shade="2" d="M494.8 220L492.5 219.6L492.5 212.6L494.8 213.1Z"/><path class="iso-shade" data-shade="3" d="M492.5 219.6L229.9 134.8L229.9 127.8L492.5 212.6ZM229.9 134.8L228 133.9L228 126.9L229.9 127.8ZM228 133.9L226.9 132.7L226.9 125.7L228 126.9ZM226.9 132.7L226.7 131.3L226.7 124.3L226.9 125.7Z"/><path class="iso-top" d="M545.2 161.6L547 162.5L548.1 163.8L548.3 165.1L547.5 166.4L501.1 211.3L499.5 212.4L497.3 213L494.8 213.1L492.5 212.6L229.9 127.8L228 126.9L226.9 125.7L226.7 124.3L227.5 123L273.9 78.1L275.5 77.1L277.7 76.5L280.2 76.4L282.5 76.8Z"/><path class="iso-line iso-crease" data-tone="faint" d="M548.3 165.1L547.5 166.4L501.1 211.3L499.5 212.4L497.3 213L494.8 213.1L492.5 212.6L229.9 127.8L228 126.9L226.9 125.7L226.7 124.3"/><path class="iso-line iso-bevel" data-tone="faint" d="M548.3 165.1L545.9 166.1L499.8 210.8L498.5 211.6L496.9 212.1L495.1 212.1L493.2 211.8L230.8 127.1L229.3 126.3L228.5 125.4L226.7 124.3"/><path class="iso-line iso-edge" data-tone="mid" d="M226.7 124.3L227.5 123L273.9 78.1L275.5 77.1L277.7 76.5L280.2 76.4L282.5 76.8L545.2 161.6L547 162.5L548.1 163.8L548.3 165.1M548.3 172.1L547.5 173.4L501.1 218.3L499.5 219.3L497.3 220L494.8 220L492.5 219.6L229.9 134.8L228 133.9L226.9 132.7L226.7 131.3M548.3 165.1L548.3 172.1M226.7 124.3L226.7 131.3"/></g><path class="iso-line" data-tone="lo" d="M321.9 93.3L323.4 94.2L324 95.4L323.4 96.6L299.8 119.4L298.3 120.3L296.2 120.6L294.1 120.3L253.2 107.1L251.7 106.2L251.1 105L251.7 103.9L275.3 81L276.8 80.1L278.9 79.8L281 80.1ZM376.6 111L378.1 111.9L378.7 113L378.1 114.2L354.5 137.1L353 137.9L350.9 138.2L348.8 137.9L307.9 124.7L306.4 123.9L305.8 122.7L306.4 121.5L330 98.7L331.5 97.8L333.6 97.5L335.7 97.8ZM431.3 128.7L432.9 129.5L433.4 130.7L432.9 131.9L409.3 154.7L407.7 155.6L405.6 155.9L403.5 155.6L362.7 142.4L361.1 141.5L360.6 140.4L361.1 139.2L384.7 116.3L386.2 115.5L388.4 115.2L390.5 115.5ZM486 146.3L487.6 147.2L488.1 148.4L487.6 149.6L464 172.4L462.4 173.3L460.3 173.6L458.2 173.3L417.4 160.1L415.8 159.2L415.3 158L415.8 156.9L439.4 134L441 133.1L443.1 132.8L445.2 133.1ZM540.8 164L542.3 164.9L542.9 166L542.3 167.2L518.7 190.1L517.2 190.9L515.1 191.2L513 190.9L472.1 177.7L470.6 176.9L470 175.7L470.6 174.5L494.1 151.7L495.7 150.8L497.8 150.5L499.9 150.8Z"/><text class="iso-face-text" data-tone="hi" transform="matrix(1.824 0.589 -1.053 1.02 263.306 123.681)" font-size="5.6" text-anchor="middle">0</text><text class="iso-face-text" data-tone="mid" transform="matrix(1.824 0.589 -1.053 1.02 255.336 131.4)" font-size="4.4" text-anchor="middle">-5</text><text class="iso-face-text" data-tone="hi" transform="matrix(1.824 0.589 -1.053 1.02 318.027 141.347)" font-size="5.6" text-anchor="middle">1</text><text class="iso-face-text" data-tone="mid" transform="matrix(1.824 0.589 -1.053 1.02 310.057 149.067)" font-size="4.4" text-anchor="middle">-4</text><text class="iso-face-text" data-tone="hi" transform="matrix(1.824 0.589 -1.053 1.02 372.748 159.014)" font-size="5.6" text-anchor="middle">2</text><text class="iso-face-text" data-tone="mid" transform="matrix(1.824 0.589 -1.053 1.02 364.778 166.733)" font-size="4.4" text-anchor="middle">-3</text><text class="iso-face-text" data-tone="hi" transform="matrix(1.824 0.589 -1.053 1.02 427.469 176.681)" font-size="5.6" text-anchor="middle">3</text><text class="iso-face-text" data-tone="mid" transform="matrix(1.824 0.589 -1.053 1.02 419.5 184.4)" font-size="4.4" text-anchor="middle">-2</text><text class="iso-face-text" data-tone="hi" transform="matrix(1.824 0.589 -1.053 1.02 482.191 194.348)" font-size="5.6" text-anchor="middle">4</text><text class="iso-face-text" data-tone="mid" transform="matrix(1.824 0.589 -1.053 1.02 474.221 202.067)" font-size="4.4" text-anchor="middle">-1</text></g><g data-part="src"></g><g data-part="out"></g><g data-part="fly"></g></svg></div></div><figcaption class="iso-legend"><span class="iso-keys"><span class="iso-key"><svg class="iso-swatch" data-mark="lit" viewBox="0 0 16 10" aria-hidden="true"><path d="M2 4.5 8 1.5 14 4.5 14 6 8 9 2 6Z"/><path class="iso-swatch-crease" d="M2 4.5 8 7.5 14 4.5"/></svg>The items the expression picks</span><span class="iso-key"><svg class="iso-swatch" data-mark="raised" viewBox="0 0 16 10" aria-hidden="true"><path d="M2 4.5 8 1.5 14 4.5 14 6 8 9 2 6Z"/><path class="iso-swatch-crease" d="M2 4.5 8 7.5 14 4.5"/></svg>Index in front of each slot; negative index below it</span></span><span class="iso-caption">Counting starts at 0, so the last of 5 items is nums[4], or nums[-1] from the end. An index gives you one value. A slice gives you a new list and leaves nums alone; like range(), it stops before the stop number.</span></figcaption></figure><div class="code-panel" data-code="l-index"><div class="tabs" role="tablist"><button type="button" role="tab" data-pick="0"><code>nums[0]</code></button><button type="button" role="tab" data-pick="1"><code>nums[2]</code></button><button type="button" role="tab" data-pick="2"><code>nums[-1]</code></button><button type="button" role="tab" data-pick="3"><code>nums[-2]</code></button><button type="button" role="tab" data-pick="4"><code>nums[1:4]</code></button><button type="button" role="tab" data-pick="5"><code>nums[:2]</code></button><button type="button" role="tab" data-pick="6"><code>nums[3:]</code></button><button type="button" role="tab" data-pick="7"><code>nums[::2]</code></button><button type="button" role="tab" data-pick="8"><code>nums[::-1]</code></button><button type="button" role="tab" data-pick="9"><code>nums[5]</code></button><button type="button" role="tab" data-pick="10"><code>len(nums)</code></button></div><div class="console"><span>Result</span><pre data-out>nums[0]  →  7</pre></div></div></div>
+<div class="ex"><pre class="py">nums = [<span class="n">7</span>, <span class="n">3</span>, <span class="n">9</span>, <span class="n">4</span>, <span class="n">1</span>]
+<span class="b">print</span>(nums[<span class="n">0</span>], nums[-<span class="n">1</span>])   <span class="c"># first and last</span>
+<span class="b">print</span>(nums[<span class="n">1</span>:<span class="n">4</span>])           <span class="c"># index 1, 2, 3</span>
+<span class="b">print</span>(nums[:<span class="n">2</span>], nums[<span class="n">3</span>:])  <span class="c"># first two, from index 3 on</span>
+<span class="b">print</span>(nums[::<span class="n">2</span>])           <span class="c"># every second item</span>
+<span class="b">print</span>(nums[::-<span class="n">1</span>])          <span class="c"># reversed copy</span></pre><pre class="run"><span class="run-label">Output</span>7 1
+[3, 9, 4]
+[7, 3] [4, 1]
+[7, 9, 1]
+[1, 4, 9, 3, 7]</pre></div>
+<aside class="trap"><b>IndexError</b> <code>nums[5]</code> on a 5-item list stops the program with <i>IndexError: list index out of range</i>; the last index is <code>len(nums) - 1</code>. A slice never raises it: <code>nums[3:99]</code> just gives <code>[4, 1]</code>.</aside>
+<aside class="you"><b>Connects to what you know:</b> <code>range()</code> and slices share one rule: start is included, stop is not. <code>nums[1:4]</code> picks indices 1, 2, 3, just like <code>range(1, 4)</code>.</aside>
+<div class="quiz"><h4>Check yourself</h4><details><summary><code>letters = ['a', 'b', 'c', 'd']</code>. What is <code>letters[1]</code>? <code>letters[-2]</code>?</summary><div><code>'b'</code> (index 1 is the second item) and <code>'c'</code> (second from the end).</div></details><details><summary>What does <code>letters[1:3]</code> give?</summary><div><code>['b', 'c']</code>: indices 1 and 2. Stop (3) is not included.</div></details><details><summary>How do you get the last 2 items of any list?</summary><div><code>letters[-2:]</code>. It works whatever the length is.</div></details></div></section><section id="change"><h2><span>2</span>Changing a list</h2>
+<p>Numbers and strings never change; you always make a new one. Lists are different: you can change them <b>in place</b>. These methods change the list itself.</p>
+<table class="tbl"><tr><th>You write</th><th>What happens</th></tr>
+<tr><td><code>nums.append(6)</code></td><td>adds 6 at the end</td></tr>
+<tr><td><code>nums.insert(1, 8)</code></td><td>puts 8 at index 1; everything after it shifts right</td></tr>
+<tr><td><code>nums.pop()</code></td><td>removes the last item and gives it back; <code>pop(0)</code> removes the first</td></tr>
+<tr><td><code>nums.remove(9)</code></td><td>deletes the first 9 it finds (ValueError if there is none)</td></tr>
+<tr><td><code>nums[0] = 5</code></td><td>replaces the item at index 0</td></tr>
+<tr><td><code>nums.sort()</code></td><td>puts the list in order; <code>nums.reverse()</code> flips it</td></tr>
+<tr><td><code>nums + [10, 11]</code></td><td>a <b>new</b> list joining both; nums is unchanged</td></tr></table>
+<p>Step through the figure. Each line moves blocks to their new index, and the new or changed block lights up. Look at the last four lines: a name is just a tag <b>wired</b> to a list.</p>
+<div data-fig="l-change"><figure class="iso-figure"><div class="iso-plate"><div class="iso-plate-corners" aria-hidden="true"><span class="iso-plate-corner" data-corner="fig">Fig 2</span><span class="iso-plate-corner" data-corner="title">Change a list</span><span class="iso-plate-corner" data-corner="hint">Click or press → to run the next line</span><span class="iso-plate-corner" data-corner="readout" data-readout>nums has 5 items</span></div><div class="iso-stage" tabindex="0" role="group" aria-label="List methods figure: press the right arrow to run the next line"><svg xmlns="http://www.w3.org/2000/svg" class="iso-svg" viewBox="0 0 620 400" role="img" aria-label="A list drawn as a tray of numbered slots holding value blocks, with the name nums on a tag wired to it. As each line runs, blocks drop in, lift out or slide to their new index. Later a second tag, b, is wired to the same tray, and c gets a tray of its own from copy()."><g data-part="copy"></g><g data-part="tray"></g><g data-part="tags"></g><g data-part="blocks"></g></svg></div></div><figcaption class="iso-legend"><span class="iso-keys"><span class="iso-key"><svg class="iso-swatch" data-mark="lit" viewBox="0 0 16 10" aria-hidden="true"><path d="M2 4.5 8 1.5 14 4.5 14 6 8 9 2 6Z"/><path class="iso-swatch-crease" d="M2 4.5 8 7.5 14 4.5"/></svg>The block this line adds or changes</span><span class="iso-key"><svg class="iso-swatch" data-mark="edge" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 5h13"/></svg>Wire: which list a name points at</span></span><span class="iso-caption">Lists can change after you make them. append, insert, pop, remove, sort and nums[i] = x all change the list itself. A name is only a tag on a list, so b = nums gives the same list two tags. Use .copy() when you want a separate list.</span></figcaption></figure><div class="code-panel" data-code="l-change"><pre class="py"><span data-line="0">nums = [7, 3, 9, 4, 1]</span>
+<span data-line="1">nums.append(6)</span>
+<span data-line="2">nums.insert(1, 8)</span>
+<span data-line="3">nums.pop()</span>
+<span data-line="4">nums.remove(9)</span>
+<span data-line="5">nums[0] = 5</span>
+<span data-line="6">nums.sort()</span>
+<span data-line="7">b = nums</span>
+<span data-line="8">b.append(2)</span>
+<span data-line="9">c = nums.copy()</span>
+<span data-line="10">c.append(99)</span></pre><div class="console"><span>Lists now</span><pre data-out></pre></div><div class="steps"><button type="button" data-step="-1" aria-label="Previous line">◀</button><button type="button" data-step="1">Next line ▶</button></div></div></div>
+<h3>Two names, one list</h3>
+<p><code>b = nums</code> does <b>not</b> copy the list. It ties a second tag to the same list, so a change through <code>b</code> shows up in <code>nums</code> too. When you want a separate list, ask for one: <code>nums.copy()</code> or <code>nums[:]</code>.</p>
+<div class="ex"><pre class="py">nums = [<span class="n">1</span>, <span class="n">3</span>, <span class="n">4</span>]
+b = nums          <span class="c"># same list, two names</span>
+c = nums.copy()   <span class="c"># a new, separate list</span>
+b.append(<span class="n">5</span>)
+c.append(<span class="n">99</span>)
+<span class="b">print</span>(nums)
+<span class="b">print</span>(c)</pre><pre class="run"><span class="run-label">Output</span>[1, 3, 4, 5]
+[1, 3, 4, 99]</pre></div>
+<aside class="trap"><b>sort() gives back None</b> <code>nums = nums.sort()</code> throws your list away: sort() changes the list and returns None, so nums becomes None. Write <code>nums.sort()</code> on its own line, or use <code>sorted(nums)</code>, which returns a new sorted list and leaves nums alone.</aside>
+<aside class="you"><b>Connects to what you know:</b> in the refresher, <code>total = price * qty</code> kept 12 after qty changed, because numbers can't change. A list can. With <code>b = nums</code>, changing the list changes what both names see.</aside>
+<div class="quiz"><h4>Check yourself</h4><details><summary><code>x = [1, 2]; y = x; y.append(3); print(x)</code>?</summary><div><code>[1, 2, 3]</code>. x and y are the same list.</div></details><details><summary>What is the difference between <code>nums.sort()</code> and <code>sorted(nums)</code>?</summary><div>sort() changes nums and returns None. sorted() returns a new sorted list and leaves nums as it was.</div></details><details><summary><code>nums = [5, 6, 7]</code>. What does <code>nums.pop(0)</code> return, and what is nums after?</summary><div>It returns <code>5</code>, and nums is <code>[6, 7]</code>.</div></details></div></section><section id="loop"><h2><span>3</span>Looping over a list</h2>
+<p>A <code>for</code> loop can walk straight through a list: the loop variable takes each item in turn. You don't need <code>range(len(...))</code> unless you also want the index, and then <code>enumerate()</code> gives you both.</p>
+<div class="ex"><pre class="py">nums = [<span class="n">3</span>, <span class="n">8</span>, <span class="n">1</span>, <span class="n">9</span>]
+total = <span class="n">0</span>
+<span class="k">for</span> i, n <span class="k">in</span> <span class="b">enumerate</span>(nums):   <span class="c"># i is the index, n is the item</span>
+    <span class="b">print</span>(i, n)
+    total += n
+<span class="b">print</span>(total, <span class="b">sum</span>(nums), <span class="b">min</span>(nums), <span class="b">max</span>(nums))
+<span class="b">print</span>(<span class="b">sorted</span>(nums), nums)</pre><pre class="run"><span class="run-label">Output</span>0 3
+1 8
+2 1
+3 9
+21 21 1 9
+[1, 3, 8, 9] [3, 8, 1, 9]</pre></div>
+<h3>Building a list in a loop</h3>
+<p>Start with an empty list and <code>append</code> inside the loop. This is the accumulator pattern from the refresher, but collecting items instead of adding them up.</p>
+<div class="ex"><pre class="py">numbers = []
+<span class="k">while</span> <span class="k">True</span>:
+    n = <span class="b">int</span>(<span class="b">input</span>(<span class="s">"Number (0 to stop): "</span>))
+    <span class="k">if</span> n == <span class="n">0</span>:
+        <span class="k">break</span>
+    numbers.append(n)
+
+<span class="b">print</span>(numbers)
+<span class="b">print</span>(<span class="s">"Total:"</span>, <span class="b">sum</span>(numbers))
+<span class="b">print</span>(<span class="s">"Reversed:"</span>, numbers[::-<span class="n">1</span>])</pre><pre class="run"><span class="run-label">Output</span>Number (0 to stop): 4
+Number (0 to stop): 7
+Number (0 to stop): 2
+Number (0 to stop): 0
+[4, 7, 2]
+Total: 13
+Reversed: [2, 7, 4]</pre></div>
+<h3>Strings to lists and back</h3>
+<div class="ex"><pre class="py">words = <span class="s">"lists are fun"</span>.split()   <span class="c"># split on spaces</span>
+<span class="b">print</span>(words)
+<span class="b">print</span>(<span class="s">"-"</span>.join(words))           <span class="c"># glue back with "-"</span>
+<span class="b">print</span>(<span class="s">"a,b,c"</span>.split(<span class="s">","</span>))        <span class="c"># split on commas</span></pre><pre class="run"><span class="run-label">Output</span>['lists', 'are', 'fun']
+lists-are-fun
+['a', 'b', 'c']</pre></div>
+<aside class="you"><b>Connects to what you know:</b> this is why <code>sum</code> must never be a variable name. With <code>sum = 0</code> on an earlier line, <code>sum(numbers)</code> crashes with <i>TypeError: 'int' object is not callable</i>.</aside>
+<div class="quiz"><h4>Check yourself</h4><details><summary>Print each name in <code>names = ["Ada", "Linus"]</code> with its position, starting at 1.</summary><div><code>for i, name in enumerate(names, start=1): print(i, name)</code>, or <code>print(i + 1, name)</code> with a plain enumerate.</div></details><details><summary>What does <code>" ".join(["a", "b"])</code> give?</summary><div><code>"a b"</code>: one string, items joined by a space.</div></details></div></section><section id="comprehension"><h2><span>4</span>List comprehension</h2>
+<p>A lot of loops do one thing: build a new list from an old one. A <b>list comprehension</b> writes that whole loop in one line.</p>
+<div class="anatomy">
+  <div class="an-code"><span class="an-b">[</span><span class="cp-ex">n * n</span> <span class="cp-for">for n in nums</span> <span class="cp-if">if n % 2 == 1</span><span class="an-b">]</span></div>
+  <div class="an-parts">
+    <div><span class="sw cp-ex">expression</span>what to put in the new list for each item</div>
+    <div><span class="sw cp-for">for clause</span>where the items come from, and the name each one gets</div>
+    <div><span class="sw cp-if">if clause</span>optional: keep only the items where the test is True</div>
+  </div>
+</div>
+<p>It means exactly the same as this loop. The parts are in a different order:</p>
+<div class="ex"><pre class="py">result = []
+<span class="k">for</span> n <span class="k">in</span> nums:              <span class="c"># for clause</span>
+    <span class="k">if</span> n % <span class="n">2</span> == <span class="n">1</span>:          <span class="c"># if clause</span>
+        result.append(n * n)   <span class="c"># expression</span></pre></div>
+<p>The figure lays the parts out as rows, top to bottom in the order an item travels. The item leaves the source list, is tested on the <code>if</code> pad (if the test is False it drops away), becomes the expression's value on the next pad, and lands in the new list. Under the figure, the matching line of the loop version lights up at the same time.</p>
+<div data-fig="l-comp"><figure class="iso-figure"><div class="iso-plate"><div class="iso-plate-corners" aria-hidden="true"><span class="iso-plate-corner" data-corner="fig">Fig 3</span><span class="iso-plate-corner" data-corner="title">List comprehension</span><span class="iso-plate-corner" data-corner="hint">Pick a comprehension below, or press 1–5</span><span class="iso-plate-corner" data-corner="readout" data-readout>[n * n for n in nums if n % 2 == 1]</span></div><div class="iso-stage" tabindex="0" role="group" aria-label="List comprehension figure: press 1 to 5 to pick a comprehension"><svg xmlns="http://www.w3.org/2000/svg" class="iso-svg" viewBox="0 0 620 370" role="img" aria-label="A list comprehension laid out as four rows, read top to bottom like the code: the source list tagged with its for clause, a pad tagged with the if test, a pad tagged with the expression, and the new list tagged result. Each item travels from the source to the if pad; if the test is False it drops away, otherwise it moves to the expression pad, becomes the expression's value, and is appended to the new list."><g data-part="src"></g><g data-part="pads"></g><g data-part="out"></g><g data-part="fly"></g></svg></div></div><figcaption class="iso-legend"><span class="iso-keys"><span class="iso-key"><svg class="iso-swatch" data-mark="lit" viewBox="0 0 16 10" aria-hidden="true"><path d="M2 4.5 8 1.5 14 4.5 14 6 8 9 2 6Z"/><path class="iso-swatch-crease" d="M2 4.5 8 7.5 14 4.5"/></svg>The item being processed right now</span><span class="iso-key"><svg class="iso-swatch" data-mark="raised" viewBox="0 0 16 10" aria-hidden="true"><path d="M2 4.5 8 1.5 14 4.5 14 6 8 9 2 6Z"/><path class="iso-swatch-crease" d="M2 4.5 8 7.5 14 4.5"/></svg>Pads: the if test, then the expression</span></span><span class="iso-caption">Read a comprehension in the order the item travels: for n in nums takes each item, if decides whether to keep it, and the expression at the front decides what goes into the new list. The source list never changes.</span></figcaption></figure><div class="code-panel" data-code="l-comp"><div class="tabs" role="tablist"><button type="button" role="tab" data-prog="0">double</button><button type="button" role="tab" data-prog="1">filter</button><button type="button" role="tab" data-prog="2">both</button><button type="button" role="tab" data-prog="3">if-else</button><button type="button" role="tab" data-prog="4">strings</button></div><pre class="py comp" data-comp></pre><div class="console"><span>The same thing as a for loop</span><pre class="py" data-loop></pre></div><div class="console"><span>Output</span><pre data-out></pre></div></div></div>
+<h3>The three shapes you'll write most</h3>
+<div class="ex"><pre class="py">nums = [<span class="n">7</span>, <span class="n">3</span>, <span class="n">9</span>, <span class="n">4</span>, <span class="n">1</span>]
+<span class="b">print</span>([n * <span class="n">2</span> <span class="k">for</span> n <span class="k">in</span> nums])                  <span class="c"># change every item</span>
+<span class="b">print</span>([n <span class="k">for</span> n <span class="k">in</span> nums <span class="k">if</span> n &gt; <span class="n">4</span>])             <span class="c"># keep some items</span>
+<span class="b">print</span>([n * n <span class="k">for</span> n <span class="k">in</span> nums <span class="k">if</span> n % <span class="n">2</span> == <span class="n">1</span>])    <span class="c"># both</span>
+<span class="b">print</span>([i * i <span class="k">for</span> i <span class="k">in</span> <span class="b">range</span>(<span class="n">1</span>, <span class="n">6</span>)])           <span class="c"># from a range</span>
+<span class="b">print</span>([w.upper() <span class="k">for</span> w <span class="k">in</span> [<span class="s">"hi"</span>, <span class="s">"list"</span>, <span class="s">"py"</span>]])</pre><pre class="run"><span class="run-label">Output</span>[14, 6, 18, 8, 2]
+[7, 9]
+[49, 9, 81, 1]
+[1, 4, 9, 16, 25]
+['HI', 'LIST', 'PY']</pre></div>
+<h3>if at the end vs if-else at the front</h3>
+<p>The two <code>if</code>s do different jobs and go in different places:</p>
+<ul>
+<li><code>if</code> at the <b>end</b> <i>filters</i>. Items that fail are left out, so the new list can be shorter: <code>[n for n in nums if n &gt; 4]</code>.</li>
+<li><code>if … else</code> at the <b>front</b> is part of the <i>expression</i>. Every item is kept, and each one becomes one value or the other: <code>["even" if n % 2 == 0 else "odd" for n in nums]</code> gives <code>['odd', 'odd', 'odd', 'even', 'odd']</code>.</li>
+<li><code>[n for n in nums if n &gt; 4 else 0]</code> is a SyntaxError. An <code>else</code> only goes in the front part.</li>
+</ul>
+<aside class="you"><b>Connects to what you know:</b> your "Remove the vowels" homework in one line: <code>"".join([c for c in text if c.lower() not in "aeiou"])</code>. The loop with continue and the comprehension do the same job.</aside>
+<aside class="trap"><b>When not to use one</b> Use a comprehension to <b>build a list</b>. If you only want to print things, or the logic needs several lines, an ordinary for loop is clearer. Readable code beats short code.</aside>
+<div class="quiz"><h4>Check yourself</h4><details><summary>Write <code>[x + 1 for x in [1, 2, 3]]</code> as a loop. What does it give?</summary><div><code>result = []</code>, then <code>for x in [1, 2, 3]: result.append(x + 1)</code>. It gives <code>[2, 3, 4]</code>.</div></details><details><summary>Turn this into a comprehension: keep the words in <code>words</code> longer than 3 letters.</summary><div><code>[w for w in words if len(w) &gt; 3]</code></div></details><details><summary>How long is <code>["big" if n &gt; 5 else "small" for n in nums]</code> compared with nums?</summary><div>Exactly as long. A front if-else changes values but never drops items.</div></details></div></section>
+<section id="practice"><h2><span>✎</span>Practice</h2>
+<p>Try each one before you open the solution. The outputs come from real runs.</p>
+<article class="fix"><header><span class="tag">Problem 1</span><h3>Squares</h3></header><p>Read n and print the list of squares from 1² to n².</p><details class="sol"><summary>Show a solution</summary><div class="ex"><pre class="py">n = <span class="b">int</span>(<span class="b">input</span>(<span class="s">"n: "</span>))
+squares = [i * i <span class="k">for</span> i <span class="k">in</span> <span class="b">range</span>(<span class="n">1</span>, n + <span class="n">1</span>)]
+<span class="b">print</span>(squares)</pre><pre class="run"><span class="run-label">Output</span>n: 5
+[1, 4, 9, 16, 25]</pre></div></details></article><article class="fix"><header><span class="tag">Problem 2</span><h3>Remove the vowels, again</h3></header><p>Read a text and print it without vowels (upper or lower case), using a comprehension.</p><details class="sol"><summary>Show a solution</summary><div class="ex"><pre class="py">text = <span class="b">input</span>(<span class="s">"Text: "</span>)
+kept = [c <span class="k">for</span> c <span class="k">in</span> text <span class="k">if</span> c.lower() <span class="k">not</span> <span class="k">in</span> <span class="s">"aeiou"</span>]
+<span class="b">print</span>(<span class="s">""</span>.join(kept))</pre><pre class="run"><span class="run-label">Output</span>Text: Programming
+Prgrmmng</pre></div></details></article><article class="fix"><header><span class="tag">Problem 3</span><h3>Word lengths</h3></header><p>Read a sentence. Print the length of every word, then the longest length.</p><details class="sol"><summary>Show a solution</summary><div class="ex"><pre class="py">sentence = <span class="b">input</span>(<span class="s">"Sentence: "</span>)
+lengths = [<span class="b">len</span>(word) <span class="k">for</span> word <span class="k">in</span> sentence.split()]
+<span class="b">print</span>(lengths)
+<span class="b">print</span>(<span class="b">max</span>(lengths))</pre><pre class="run"><span class="run-label">Output</span>Sentence: lists are fun to learn
+[5, 3, 3, 2, 5]
+5</pre></div></details></article><article class="fix"><header><span class="tag">Problem 4</span><h3>Who passed</h3></header><p>From scores = [72, 45, 90, 58, 66], make a list of the scores of 60 or more, then print how many there are.</p><details class="sol"><summary>Show a solution</summary><div class="ex"><pre class="py">scores = [<span class="n">72</span>, <span class="n">45</span>, <span class="n">90</span>, <span class="n">58</span>, <span class="n">66</span>]
+passed = [s <span class="k">for</span> s <span class="k">in</span> scores <span class="k">if</span> s &gt;= <span class="n">60</span>]
+<span class="b">print</span>(passed)
+<span class="b">print</span>(<span class="b">len</span>(passed), <span class="s">"passed"</span>)</pre><pre class="run"><span class="run-label">Output</span>[72, 90, 66]
+3 passed</pre></div></details></article><article class="fix"><header><span class="tag">Problem 5</span><h3>Collect until 0</h3></header><p>Read numbers until 0 is typed. Print the list, its total and the list reversed.</p><details class="sol"><summary>Show a solution</summary><div class="ex"><pre class="py">numbers = []
+<span class="k">while</span> <span class="k">True</span>:
+    n = <span class="b">int</span>(<span class="b">input</span>(<span class="s">"Number (0 to stop): "</span>))
+    <span class="k">if</span> n == <span class="n">0</span>:
+        <span class="k">break</span>
+    numbers.append(n)
+
+<span class="b">print</span>(numbers)
+<span class="b">print</span>(<span class="s">"Total:"</span>, <span class="b">sum</span>(numbers))
+<span class="b">print</span>(<span class="s">"Reversed:"</span>, numbers[::-<span class="n">1</span>])</pre><pre class="run"><span class="run-label">Output</span>Number (0 to stop): 4
+Number (0 to stop): 7
+Number (0 to stop): 2
+Number (0 to stop): 0
+[4, 7, 2]
+Total: 13
+Reversed: [2, 7, 4]</pre></div></details></article>
+</section>
+</main><script type="module">const AZIMUTH = 45;
+const ELEVATION = 30;
+const SHADES = 4;
+const RADIANS = Math.PI / 180;
+const UNIT = Math.sqrt(1.6);
+function cameraOf({ scale, azimuth = AZIMUTH, elevation = ELEVATION }) {
+    const a = azimuth * RADIANS;
+    const e = elevation * RADIANS;
+    return { sinA: Math.sin(a), cosA: Math.cos(a), sinE: Math.sin(e), cosE: Math.cos(e), k: scale * UNIT };
+}
+function iso([x, y, z], projection) {
+    const { origin } = projection;
+    const { sinA, cosA, sinE, cosE, k } = cameraOf(projection);
+    return [origin[0] + (x * sinA - y * cosA) * k, origin[1] + ((x * cosA + y * sinA) * sinE - z * cosE) * k];
+}
+function towardViewer(projection) {
+    const { sinA, cosA } = cameraOf(projection);
+    return [cosA, sinA];
+}
+function depthOf([x, y, z], projection) {
+    const { sinA, cosA, sinE, cosE } = cameraOf(projection);
+    return (x * cosA + y * sinA) * cosE + z * sinE;
+}
+const tenth = (value) => {
+    const text = (Math.round(value * 10) / 10).toFixed(1).replace(/\.0$/, "");
+    return text === "-0" ? "0" : text;
+};
+function pathOf(points, closed = false) {
+    if (!points.length)
+        return "";
+    return points.map(([x, y], at) => `${at ? "L" : "M"}${tenth(x)} ${tenth(y)}`).join("") + (closed ? "Z" : "");
+}
+const joinPaths = (paths) => paths.filter(Boolean).join("");
+function roundedPlan({ x, y, w, d, r }, steps = 8) {
+    const radius = Math.max(0, Math.min(r, w / 2, d / 2));
+    const corners = [
+        [x + w - radius, y + radius, -90],
+        [x + w - radius, y + d - radius, 0],
+        [x + radius, y + d - radius, 90],
+        [x + radius, y + radius, 180],
+    ];
+    const out = [];
+    for (const [cx, cy, start] of corners) {
+        const count = radius > 0 ? steps : 0;
+        for (let step = 0; step <= count; step++) {
+            const angle = (start + (count ? (90 * step) / count : 45)) * RADIANS;
+            out.push([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)]);
+        }
+    }
+    return out;
+}
+function signedArea(points) {
+    let area = 0;
+    for (let index = 0; index < points.length; index++) {
+        const [ax, ay] = points[index];
+        const [bx, by] = points[(index + 1) % points.length];
+        area += ax * by - bx * ay;
+    }
+    return area / 2;
+}
+const oriented = (points) => (signedArea(points) < 0 ? [...points].reverse() : points);
+function convexHull(points) {
+    const sorted = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    if (sorted.length < 3)
+        return sorted;
+    const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+    const lower = [];
+    for (const point of sorted) {
+        while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], point) <= 0)
+            lower.pop();
+        lower.push(point);
+    }
+    const upper = [];
+    for (let index = sorted.length - 1; index >= 0; index--) {
+        const point = sorted[index];
+        while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], point) <= 0)
+            upper.pop();
+        upper.push(point);
+    }
+    return [...lower.slice(0, -1), ...upper.slice(0, -1)];
+}
+function runsOf(flags, want) {
+    const count = flags.length;
+    const runs = [];
+    const start = flags.findIndex((flag, index) => flag !== flags[(index + count - 1) % count]);
+    if (start < 0)
+        return flags[0] === want ? [Array.from({ length: count + 1 }, (_, index) => index % count)] : [];
+    let run = null;
+    for (let step = 0; step < count; step++) {
+        const index = (start + step) % count;
+        if (flags[index] === want) {
+            if (!run)
+                run = [index];
+            run.push((index + 1) % count);
+        }
+        else if (run) {
+            runs.push(run);
+            run = null;
+        }
+    }
+    if (run)
+        runs.push(run);
+    return runs;
+}
+function extrude(ring, z, height, projection, options = {}) {
+    const convex = options.convex ?? true;
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const { sinA, cosA } = cameraOf(projection);
+    const normals = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const length = Math.hypot(dx, dy) || 1;
+        return (counter ? [dy / length, -dx / length] : [-dy / length, dx / length]);
+    });
+    const facing = normals.map(([nx, ny]) => nx * vx + ny * vy > 1e-9);
+    const top = ring.map(([x, y]) => iso([x, y, z + height], projection));
+    const bottom = ring.map(([x, y]) => iso([x, y, z], projection));
+    const outline = [];
+    const crease = [];
+    for (const run of runsOf(facing, false))
+        outline.push(pathOf(run.map((index) => top[index])));
+    for (const run of runsOf(facing, true)) {
+        crease.push(pathOf(run.map((index) => top[index])));
+        if (height > 0)
+            outline.push(pathOf(run.map((index) => bottom[index])));
+    }
+    if (height > 0) {
+        for (let index = 0; index < count; index++) {
+            if (facing[(index + count - 1) % count] !== facing[index])
+                outline.push(pathOf([top[index], bottom[index]]));
+        }
+    }
+    let fill;
+    if (convex) {
+        fill = pathOf(convexHull([...top, ...bottom]), true);
+    }
+    else {
+        const parts = [pathOf(oriented(top), true), pathOf(oriented(bottom), true)];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const next = (index + 1) % count;
+            parts.push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+        fill = parts.join("");
+    }
+    const buckets = Array.from({ length: SHADES }, () => []);
+    if (height > 0) {
+        const [lx, ly] = [-sinA, cosA];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const [nx, ny] = normals[index];
+            const lit = (nx * lx + ny * ly + 1) / 2;
+            const shade = Math.min(SHADES - 1, Math.max(0, Math.floor(lit * SHADES)));
+            const next = (index + 1) % count;
+            buckets[shade].push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+    }
+    let bevel;
+    if (options.bevel && options.bevel > 0) {
+        const by = options.bevel;
+        const inset = ring.map(([x, y], index) => {
+            const [ax, ay] = normals[(index + count - 1) % count];
+            const [bx, by2] = normals[index];
+            const mx = ax + bx;
+            const my = ay + by2;
+            const length = Math.hypot(mx, my) || 1;
+            return [x - (mx / length) * by, y - (my / length) * by];
+        });
+        const insetTop = inset.map(([x, y]) => iso([x, y, z + height], projection));
+        bevel = runsOf(facing, true)
+            .map((run) => pathOf([top[run[0]], ...run.slice(1, -1).map((index) => insetTop[index]), top[run[run.length - 1]]]))
+            .join("");
+    }
+    return {
+        fill,
+        outline: outline.join(""),
+        crease: crease.join(""),
+        top: pathOf(oriented(top), true),
+        shades: buckets.map((paths) => paths.join("")),
+        bevel,
+    };
+}
+const ringOf = (plan, steps = 8) => roundedPlan(plan, steps);
+function slabOf(plan, z, height, projection, steps = 8, bevel = 0) {
+    return extrude(ringOf(plan, steps), z, height, projection, { convex: true, bevel });
+}
+function circleRing(cx, cy, radius, steps = 40) {
+    return Array.from({ length: steps }, (_, step) => {
+        const angle = (step / steps) * Math.PI * 2;
+        return [cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)];
+    });
+}
+function cylinder(cx, cy, radius, z, height, projection, steps = 32, bevel = 0) {
+    return extrude(circleRing(cx, cy, radius, steps), z, height, projection, { convex: true, bevel });
+}
+const insetPlan = ({ x, y, w, d, r }, by) => ({ x: x + by, y: y + by, w: w - by * 2, d: d - by * 2, r: Math.max(0, r - by) });
+function onTop(points, z, projection, closed = false) {
+    return pathOf(points.map(([x, y]) => iso([x, y, z], projection)), closed);
+}
+const planOutline = (plan, z, projection, steps = 8) => onTop(ringOf(plan, steps), z, projection, true);
+const lineOnTop = (from, to, z, projection) => onTop([from, to], z, projection);
+const segment = (from, to, projection) => pathOf([iso(from, projection), iso(to, projection)]);
+const rise = (at, from, to, projection) => segment([at[0], at[1], from], [at[0], at[1], to], projection);
+const ring = (cx, cy, radius, z, projection, steps = 40) => onTop(circleRing(cx, cy, radius, steps), z, projection, true);
+const pointsAt = (points, projection) => points.map((point) => iso(point, projection));
+function dotGrid(x, y, columns, rows, gap, z, projection) {
+    const dots = [];
+    for (let row = 0; row < rows; row++) {
+        for (let column = 0; column < columns; column++)
+            dots.push(iso([x + column * gap, y + row * gap, z], projection));
+    }
+    return dots;
+}
+function corners({ x, y, w, d }, inset = 0) {
+    return [
+        [x + inset, y + inset],
+        [x + w - inset, y + inset],
+        [x + inset, y + d - inset],
+        [x + w - inset, y + d - inset],
+    ];
+}
+function boxCorners({ x, y, w, d }, z0, z1) {
+    const out = [];
+    for (const px of [x, x + w])
+        for (const py of [y, y + d])
+            for (const z of [z0, z1])
+                out.push([px, py, z]);
+    return out;
+}
+function knurl(cx, cy, radius, z0, z1, count, projection, inset = 0.4) {
+    const [vx, vy] = towardViewer(projection);
+    const lines = [];
+    for (let index = 0; index < count; index++) {
+        const angle = (index / count) * Math.PI * 2;
+        const nx = Math.cos(angle);
+        const ny = Math.sin(angle);
+        if (nx * vx + ny * vy < 0.15)
+            continue;
+        lines.push(segment([cx + radius * nx, cy + radius * ny, z0 + inset], [cx + radius * nx, cy + radius * ny, z1 - inset], projection));
+    }
+    return lines.join("");
+}
+function sideArc(cx, cy, radius, z, projection, steps = 24) {
+    const [vx, vy] = towardViewer(projection);
+    const facing = Math.atan2(vy, vx);
+    const points = [];
+    for (let step = 0; step <= steps; step++) {
+        const angle = facing - Math.PI / 2 + (step / steps) * Math.PI;
+        points.push(iso([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle), z], projection));
+    }
+    return pathOf(points);
+}
+function ringSeam(ring, z, projection) {
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const facing = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const [nx, ny] = counter ? [dy, -dx] : [-dy, dx];
+        return nx * vx + ny * vy > 1e-9;
+    });
+    return runsOf(facing, true).map((run) => pathOf(run.map((index) => iso([ring[index][0], ring[index][1], z], projection)))).join("");
+}
+const sideSeam = (plan, z, projection, steps = 8) => ringSeam(ringOf(plan, steps), z, projection);
+function sideRing(center, radius, axis, projection, steps = 20) {
+    const [px, py, pz] = center;
+    const points = [];
+    for (let step = 0; step < steps; step++) {
+        const angle = (step / steps) * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        points.push(iso(axis === "x" ? [px, py + u, pz + v] : [px + u, py, pz + v], projection));
+    }
+    return pathOf(points, true);
+}
+function coil(from, to, center, radius, turns, axis, projection, perTurn = 16) {
+    const count = Math.max(1, Math.round(turns * perTurn));
+    const back = [];
+    const front = [];
+    let run = [];
+    let near = null;
+    for (let index = 0; index <= count; index++) {
+        const share = index / count;
+        const angle = share * turns * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        const along = from + (to - from) * share;
+        const point = axis === "x" ? [along, center[0] + u, center[1] + v] : [center[0] + u, along, center[1] + v];
+        const normal = axis === "x" ? [0, Math.cos(angle), Math.sin(angle)] : [Math.cos(angle), 0, Math.sin(angle)];
+        const facing = depthOf(normal, projection) > 0;
+        const flat = iso(point, projection);
+        if (near === null)
+            near = facing;
+        if (facing !== near) {
+            run.push(flat);
+            (near ? front : back).push(pathOf(run));
+            run = [flat];
+            near = facing;
+            continue;
+        }
+        run.push(flat);
+    }
+    if (run.length > 1)
+        (near ? front : back).push(pathOf(run));
+    return { back: back.join(""), front: front.join("") };
+}
+function topTicks(from, to, step, every, edge, z, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, edge] : [edge, at];
+        const b = axis === "x" ? [at, edge + length] : [edge + length, at];
+        (big ? major : minor).push(lineOnTop(a, b, z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function sideTicks(from, to, step, every, face, top, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, face, top] : [face, at, top];
+        const b = axis === "x" ? [at, face, top - length] : [face, at, top - length];
+        (big ? major : minor).push(segment(a, b, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function radialTicks(cx, cy, radius, count, every, z, lengths, projection, from = 0, span = Math.PI * 2) {
+    const minor = [];
+    const major = [];
+    const closed = Math.abs(span - Math.PI * 2) < 1e-9;
+    const steps = closed ? count : count + 1;
+    for (let index = 0; index < steps; index++) {
+        const angle = from + (index / count) * span;
+        const big = index % every === 0;
+        const inner = radius - (big ? lengths[1] : lengths[0]);
+        const sx = Math.sin(angle);
+        const sy = -Math.cos(angle);
+        (big ? major : minor).push(lineOnTop([cx + sx * inner, cy + sy * inner], [cx + sx * radius, cy + sy * radius], z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+const haloOf = (plan, z, height, projection) => slabOf(plan, z, height, projection).fill;
+function axisVector(projection, [dx, dy, dz]) {
+    const origin = iso([0, 0, 0], projection);
+    const moved = iso([dx, dy, dz], projection);
+    return [moved[0] - origin[0], moved[1] - origin[1]];
+}
+const fine = (value) => Math.round(value * 100) / 100;
+function translateAlong(projection, by) {
+    const [x, y] = axisVector(projection, by);
+    return `translate(${fine(x)} ${fine(y)})`;
+}
+const thousandth = (value) => Math.round(value * 1000) / 1000;
+function axesAt(at, z, projection) {
+    const origin = iso([at[0], at[1], z], projection);
+    const along = (point) => {
+        const [px, py] = iso(point, projection);
+        return [px - origin[0], py - origin[1]];
+    };
+    return { origin, x: along([at[0] + 1, at[1], z]), y: along([at[0], at[1] + 1, z]), z: along([at[0], at[1], z + 1]) };
+}
+const matrixOf = (u, v, origin) => `matrix(${thousandth(u[0])} ${thousandth(u[1])} ${thousandth(v[0])} ${thousandth(v[1])} ${thousandth(origin[0])} ${thousandth(origin[1])})`;
+function holdStill(element, [dx, dy]) {
+    const text = dx || dy ? `translate(${-dx} ${-dy})` : "";
+    element.querySelectorAll("[data-hold]").forEach((node) => (text ? node.setAttribute("transform", text) : node.removeAttribute("transform")));
+}
+function topMatrix(at, z, projection, along = "x") {
+    const { origin, x, y } = axesAt(at, z, projection);
+    return along === "x" ? matrixOf(x, y, origin) : matrixOf([-y[0], -y[1]], x, origin);
+}
+function sideMatrix(at, z, projection, face) {
+    const { origin, x, y, z: up } = axesAt(at, z, projection);
+    const down = [-up[0], -up[1]];
+    return face === "left" ? matrixOf(x, down, origin) : matrixOf([-y[0], -y[1]], down, origin);
+}
+function screenRise(height, projection) {
+    const { cosE, k } = cameraOf(projection);
+    return height * cosE * k;
+}
+function fitProjection(points, width, height, { pad = 24, headroom = 0, azimuth = AZIMUTH, elevation = ELEVATION } = {}) {
+    const unit = { origin: [0, 0], scale: 1, azimuth, elevation };
+    const flat = points.map((point) => iso(point, unit));
+    const xs = flat.map(([x]) => x);
+    const ys = flat.map(([, y]) => y);
+    const left = Math.min(...xs);
+    const right = Math.max(...xs);
+    const up = Math.min(...ys);
+    const down = Math.max(...ys);
+    const scale = Math.min((width - pad * 2) / (right - left), (height - pad * 2 - headroom) / (down - up));
+    return {
+        origin: [width / 2 - ((left + right) / 2) * scale, headroom + (height - headroom) / 2 - ((up + down) / 2) * scale],
+        scale,
+        azimuth,
+        elevation,
+    };
+}
+const escape = (text) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const attrs = (pairs) => Object.entries(pairs)
+    .filter(([, value]) => value !== undefined && value !== false)
+    .map(([key, value]) => ` ${key}="${escape(String(value))}"`)
+    .join("");
+function solidSvg(paths, { tone = "hi", crease = "faint", halo = false, lit = false, flat = false, className, inner = "" } = {}) {
+    const parts = [];
+    if (halo)
+        parts.push(`<path class="iso-halo" d="${paths.fill}"/>`);
+    parts.push(`<path class="iso-fill" d="${paths.fill}"/>`);
+    if (!flat) {
+        paths.shades.forEach((d, shade) => {
+            if (d)
+                parts.push(`<path class="iso-shade" data-shade="${shade}" d="${d}"/>`);
+        });
+        parts.push(`<path class="iso-top" d="${paths.top}"/>`);
+    }
+    if (crease !== "none" && paths.crease)
+        parts.push(`<path class="iso-line iso-crease" data-tone="${crease}" d="${paths.crease}"/>`);
+    if (crease !== "none" && paths.bevel)
+        parts.push(`<path class="iso-line iso-bevel" data-tone="${crease}" d="${paths.bevel}"/>`);
+    if (inner)
+        parts.push(inner);
+    parts.push(`<path class="iso-line iso-edge" data-tone="${tone}" d="${paths.outline}"/>`);
+    return `<g${attrs({ class: className ? `iso-solid ${className}` : "iso-solid", "data-lit": lit ? "" : undefined, "data-seamless": paths.seamless ? "" : undefined })}>${parts.join("")}</g>`;
+}
+function lineSvg(d, { tone = "lo", dotted = false, dashed = false, flow = false, className, free } = {}) {
+    if (!d)
+        return "";
+    return `<path${attrs({
+        class: className ? `iso-line ${className}` : "iso-line",
+        "data-tone": tone,
+        "data-free": free === true ? "" : free || undefined,
+        "data-dotted": dotted ? "" : undefined,
+        "data-dashed": dashed ? "" : undefined,
+        "data-flow": flow ? "" : undefined,
+        d,
+    })}/>`;
+}
+function dotsSvg(points, { size = 0.5, tone = "mid", pulse = false } = {}) {
+    const dots = points
+        .map(([x, y, alpha], index) => `<circle cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"${alpha !== undefined && alpha < 1 ? ` fill-opacity="${Math.max(0, alpha).toFixed(2)}"` : ""}${pulse ? ` data-pulse="" style="--pulse-at:${(index * 137) % 1600}ms"` : ""}/>`)
+        .join("");
+    return `<g class="iso-dots" data-tone="${tone}">${dots}</g>`;
+}
+function fadedSvg(list, style = {}) {
+    const groups = new Map();
+    for (const entry of list) {
+        const [d, alpha] = Array.isArray(entry) ? entry : [entry.d, entry.alpha];
+        if (!d || !(alpha > 0.02))
+            continue;
+        const level = Math.min(1, Math.round(alpha * 20) / 20);
+        groups.set(level, (groups.get(level) ?? "") + d);
+    }
+    return [...groups].map(([alpha, d]) => (alpha >= 1 ? lineSvg(d, style) : `<g opacity="${alpha.toFixed(2)}">${lineSvg(d, style)}</g>`)).join("");
+}
+function fadeLineSvg(points, { fade = [0, 0], tone = "lo", className, stops = 6 } = {}) {
+    if (points.length < 2)
+        return "";
+    const ease = (t) => t * t * (3 - 2 * t);
+    const hashOf = (text) => {
+        let hash = 2166136261;
+        for (let index = 0; index < text.length; index++)
+            hash = Math.imul(hash ^ text.charCodeAt(index), 16777619);
+        return (hash >>> 0).toString(36);
+    };
+    const lengths = [0];
+    for (let index = 1; index < points.length; index++)
+        lengths.push(lengths[index - 1] + Math.hypot(points[index][0] - points[index - 1][0], points[index][1] - points[index - 1][1]));
+    const at = (length) => {
+        let index = 1;
+        while (index < points.length - 1 && lengths[index] < length)
+            index++;
+        const span = lengths[index] - lengths[index - 1] || 1;
+        const t = Math.max(0, Math.min(1, (length - lengths[index - 1]) / span));
+        return [points[index - 1][0] + (points[index][0] - points[index - 1][0]) * t, points[index - 1][1] + (points[index][1] - points[index - 1][1]) * t];
+    };
+    const pieceOf = (from, to) => [at(from), ...points.filter((_, index) => lengths[index] > from + 1e-6 && lengths[index] < to - 1e-6), at(to)];
+    const total = lengths[lengths.length - 1];
+    if (total < 1e-6)
+        return "";
+    let [start, end] = Array.isArray(fade) ? fade : [fade, fade];
+    if (start + end > total) {
+        const share = total / (start + end);
+        start *= share;
+        end *= share;
+    }
+    const paint = `var(--anatomy-${tone})`;
+    const ramp = (piece, rising) => {
+        const d = pathOf(piece);
+        const [x1, y1] = piece[0];
+        const [x2, y2] = piece[piece.length - 1];
+        const id = `iso-fade-${hashOf(`${d}|${tone}|${rising}`)}`;
+        const marks = Array.from({ length: stops + 1 }, (_, index) => {
+            const t = index / stops;
+            const alpha = ease(rising ? t : 1 - t);
+            return `<stop offset="${t.toFixed(3)}" stop-opacity="${alpha.toFixed(3)}" style="stop-color:${paint}"/>`;
+        }).join("");
+        const gradient = `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${tenth(x1)}" y1="${tenth(y1)}" x2="${tenth(x2)}" y2="${tenth(y2)}">${marks}</linearGradient>`;
+        return `<defs>${gradient}</defs><path${attrs({ class: className ? `iso-line ${className}` : "iso-line", "data-tone": tone, "data-free": rising ? "start" : "end", d, style: `stroke:url(#${id})` })}/>`;
+    };
+    const parts = [];
+    if (start > 0.05)
+        parts.push(ramp(pieceOf(0, start), true));
+    if (total - end - start > 0.05)
+        parts.push(lineSvg(pathOf(pieceOf(start, total - end)), { tone, className }));
+    if (end > 0.05)
+        parts.push(ramp(pieceOf(total - end, total), false));
+    return `<g class="iso-fade">${parts.join("")}</g>`;
+}
+function wireSvg(from, to, { via = [], tone = "lo", dotted = false, dashed = false, flow = false, ends = "both", size = 1.2 } = {}) {
+    const d = pathOf([from, ...via, to]);
+    const end = ([x, y]) => `<circle class="iso-wire-end" cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"/>`;
+    return `<g class="iso-wire" data-tone="${tone}">${lineSvg(d, { tone, dotted, dashed, flow })}${ends === "both" || ends === "from" ? end(from) : ""}${ends === "both" || ends === "to" ? end(to) : ""}</g>`;
+}
+function faceTextSvg(transform, text, { size = 3, tone = "mid", anchor = "start" } = {}) {
+    return `<text class="iso-face-text" data-tone="${tone}" transform="${transform}" font-size="${size}" text-anchor="${anchor}">${escape(text)}</text>`;
+}
+function groupSvg(children, extra = {}) {
+    return `<g${attrs(extra)}>${Array.isArray(children) ? children.join("") : children}</g>`;
+}
+function figureSvg({ width, height, label, body, standalone = false, className }) {
+    const style = standalone ? `<style>${ISO_CSS}</style>` : "";
+    return `<svg${attrs({
+        xmlns: "http://www.w3.org/2000/svg",
+        class: `iso-svg${standalone ? " iso" : ""}${className ? ` ${className}` : ""}`,
+        "data-theme": standalone || undefined,
+        viewBox: `0 0 ${width} ${height}`,
+        role: "img",
+        "aria-label": label,
+    })}>${style}${Array.isArray(body) ? body.join("") : body}</svg>`;
+}
+function swatchSvg(mark) {
+    if (mark === "raised" || mark === "flat" || mark === "lit") {
+        const body = mark === "flat" ? "M2 6.5 8 3.5 14 6.5 8 9.5Z" : "M2 4.5 8 1.5 14 4.5 14 6 8 9 2 6Z";
+        const crease = mark === "flat" ? "" : `<path class="iso-swatch-crease" d="M2 4.5 8 7.5 14 4.5"/>`;
+        return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="${body}"/>${crease}</svg>`;
+    }
+    return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 5h13"/></svg>`;
+}
+function plateHtml({ fig, title, hint, readout = "", keys = [], caption, body }) {
+    const corner = (name, text, extra = "") => `<span class="iso-plate-corner" data-corner="${name}"${extra}>${escape(text)}</span>`;
+    const legend = keys.length || caption
+        ? `<figcaption class="iso-legend">${keys.length ? `<span class="iso-keys">${keys.map((key) => `<span class="iso-key">${swatchSvg(key.mark)}${escape(key.label)}</span>`).join("")}</span>` : ""}${caption ? `<span class="iso-caption">${escape(caption)}</span>` : ""}</figcaption>`
+        : "";
+    return `<figure class="iso-figure"><div class="iso-plate"><div class="iso-plate-corners" aria-hidden="true">${corner("fig", fig)}${title ? corner("title", title) : ""}${hint ? corner("hint", hint) : ""}${corner("readout", readout, " data-readout")}</div>${body}</div>${legend}</figure>`;
+}
+function pageHtml({ title, theme = "dark", body, script = "", width = 650 }) {
+    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><style>${ISO_CSS}${PAGE_CSS.replace("__WIDTH__", String(width))}</style></head><body class="iso" data-theme="${theme}"><main class="iso-page">${body}</main>${script ? `<script type="module">${script.replace(/<\/(script)/gi, "<\\/$1")}<\/script>` : ""}</body></html>`;
+}
+const PAGE_CSS = `
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(__WIDTH__px,100% - 32px);margin:64px auto 96px}
+`;
+const ISO_CSS = `
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+`;
+const G = {"PITCH":30,"CELL":24,"BH":6,"TRAY_H":4};
+function textAt(P, text, x, y, z, size, tone) {
+  return faceTextSvg(topMatrix([x, y + size * 0.36], z, P, "x"), text, { size, tone, anchor: "middle" });
+}
+function traySvg(P, G, x0, n, y, { indices = true, ghost = 0 } = {}) {
+  const slots = Math.max(n, 1);
+  const plan = { x: x0 - G.PITCH / 2, y: y - 16, w: slots * G.PITCH, d: indices ? 50 : 32, r: 3 };
+  let out = `<path class="iso-halo" d="${haloOf(insetPlan(plan, 3), -G.TRAY_H, G.TRAY_H, P)}"/>`;
+  out += solidSvg(slabOf(plan, -G.TRAY_H, G.TRAY_H, P, 4, 0.8), { tone: "mid" });
+  let lines = "";
+  for (let i = 0; i < n; i++) {
+    const cx = x0 + i * G.PITCH;
+    lines += planOutline({ x: cx - G.CELL / 2 - 1.2, y: y - G.CELL / 2 - 1.2, w: G.CELL + 2.4, d: G.CELL + 2.4, r: 2 }, 0, P, 3);
+  }
+  out += lineSvg(lines, { tone: "lo" });
+  if (indices) {
+    for (let i = 0; i < n; i++) {
+      const cx = x0 + i * G.PITCH;
+      out += textAt(P, String(i), cx, y + 21, 0, 5.6, "hi");
+      out += textAt(P, String(i - n), cx, y + 29, 0, 4.4, "mid");
+    }
+  }
+  for (let g = 0; g < ghost; g++) {
+    const cx = x0 + (n + g) * G.PITCH;
+    out += lineSvg(planOutline({ x: cx - G.CELL / 2, y: y - G.CELL / 2, w: G.CELL, d: G.CELL, r: 2 }, 0, P, 3), { tone: "mid", dashed: true });
+    out += textAt(P, String(n + g), cx, y + 21, 0, 5.6, "mid");
+  }
+  return out;
+}
+function blockSvg(P, G, cx, y, z, text, { lit = false, dim = false } = {}) {
+  const plan = { x: cx - G.CELL / 2, y: y - G.CELL / 2, w: G.CELL, d: G.CELL, r: 2 };
+  const size = text.length <= 2 ? 8 : text.length <= 4 ? 6 : 4.6;
+  return (
+    solidSvg(slabOf(plan, z, G.BH, P, 3, 0.6), { tone: dim ? "lo" : "hi", crease: "lo", lit }) +
+    textAt(P, text, cx, y, z + G.BH, size, dim ? "mid" : "hi")
+  );
+}
+function tagSvg(P, x, y, name, w = 40, tone = "hi") {
+  const plan = { x, y: y - 8, w, d: 16, r: 2 };
+  const size = Math.min(6, (w - 6) / (0.62 * name.length));
+  return (
+    solidSvg(slabOf(plan, -2, 2, P, 3, 0.5), { tone: "mid" }) +
+    textAt(P, name, x + w / 2, y, 0, size, tone)
+  );
+}
+
+{
+const body = document.body;
+try { const saved = localStorage.getItem("py-theme"); if (saved) body.dataset.theme = saved; else if (matchMedia("(prefers-color-scheme: light)").matches) body.dataset.theme = "light"; } catch (e) {}
+document.querySelector("[data-theme-toggle]").addEventListener("click", () => {
+  body.dataset.theme = body.dataset.theme === "light" ? "dark" : "light";
+  try { localStorage.setItem("py-theme", body.dataset.theme); } catch (e) {}
+});
+}
+
+{
+const root = document.querySelector('[data-fig="l-index"]');
+const stage = root.querySelector(".iso-stage");
+const svg = stage.querySelector("svg");
+const readout = root.querySelector("[data-readout]");
+const P = {"origin":[347.15298149928566,160.24890626994835],"scale":1.6651127952889564,"azimuth":60,"elevation":34};
+const NUMS = [7,3,9,4,1], X0 = -50, SRC_Y = -30, OUT_Y = 40, TAG_W = 44;
+const EXPRS = [{"code":"nums[0]","pick":[0],"list":false,"result":"7"},{"code":"nums[2]","pick":[2],"list":false,"result":"9"},{"code":"nums[-1]","pick":[4],"list":false,"result":"1"},{"code":"nums[-2]","pick":[3],"list":false,"result":"4"},{"code":"nums[1:4]","pick":[1,2,3],"list":true,"result":"[3, 9, 4]"},{"code":"nums[:2]","pick":[0,1],"list":true,"result":"[7, 3]"},{"code":"nums[3:]","pick":[3,4],"list":true,"result":"[4, 1]"},{"code":"nums[::2]","pick":[0,2,4],"list":true,"result":"[7, 9, 1]"},{"code":"nums[::-1]","pick":[4,3,2,1,0],"list":true,"result":"[1, 4, 9, 3, 7]"},{"code":"nums[5]","pick":[],"error":"IndexError: list index out of range","result":"IndexError: list index out of range"},{"code":"len(nums)","pick":[],"value":"5","result":"5"}];
+const srcEl = svg.querySelector('[data-part="src"]'), outEl = svg.querySelector('[data-part="out"]'), flyEl = svg.querySelector('[data-part="fly"]'), trayEl = svg.querySelector('[data-part="src-tray"]');
+const tabs = [...root.querySelectorAll("[data-pick]")], out = root.querySelector("[data-out]");
+const still = matchMedia("(prefers-reduced-motion: reduce)");
+let step = 0, lift = NUMS.map(() => 0), t = 0, touring = !still.matches, visible = false, frame = 0, last = 0, idle = 0, clock = 0, key = "";
+const ease = (u) => (u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2);
+function select(n) {
+  step = (n + EXPRS.length) % EXPRS.length; t = 0;
+  const e = EXPRS[step];
+  tabs.forEach((b, i) => b.setAttribute("aria-selected", String(i === step)));
+  readout.textContent = e.code + " → " + e.result;
+  out.textContent = e.code + "  →  " + e.result;
+  trayEl.innerHTML = traySvg(P, G, X0, NUMS.length, SRC_Y, { ghost: e.error ? 1 : 0 });
+  run();
+}
+function draw() {
+  const e = EXPRS[step];
+  const k2 = lift.map((v) => v.toFixed(2)).join() + t.toFixed(3) + step;
+  if (k2 === key) return; key = k2;
+  srcEl.innerHTML = NUMS.map((v, i) => blockSvg(P, G, X0 + i * G.PITCH, SRC_Y, lift[i] * 7, String(v), { lit: e.pick.includes(i), dim: (e.pick.length > 0 || !!e.error) && !e.pick.includes(i) })).join("");
+  const u = ease(Math.min(1, t));
+  let tray = "", fly = "";
+  if (e.list) {
+    const n = e.pick.length;
+    const ox = X0 + ((5 - n) * G.PITCH) / 2;
+    if (u > 0.02) tray = tagSvg(P, ox - G.PITCH / 2 - 62, OUT_Y, e.code, 56) + traySvg(P, G, ox, n, OUT_Y, { indices: u > 0.9 });
+    e.pick.forEach((i, j) => {
+      const sx = X0 + i * G.PITCH, tx = ox + j * G.PITCH;
+      if (u > 0.02) fly += blockSvg(P, G, sx + (tx - sx) * u, SRC_Y + (OUT_Y - SRC_Y) * u, 7 * (1 - u) + Math.sin(u * Math.PI) * 10, String(NUMS[i]));
+    });
+  } else if (e.pick.length) {
+    const i = e.pick[0], sx = X0 + i * G.PITCH, tx = X0 + 2 * G.PITCH;
+    if (u > 0.02) fly = blockSvg(P, G, sx + (tx - sx) * u, SRC_Y + (OUT_Y - SRC_Y) * u, 7 * (1 - u) + Math.sin(u * Math.PI) * 10, String(NUMS[i]));
+  } else if (e.value && u > 0.02) {
+    fly = blockSvg(P, G, X0 + 2 * G.PITCH, OUT_Y, 0, e.value);
+  }
+  outEl.innerHTML = tray;
+  flyEl.innerHTML = fly;
+}
+function tick(now) {
+  const dt = last ? Math.min((now - last) / 1000, 1 / 30) : 1 / 60;
+  last = now;
+  const calm = still.matches, e = EXPRS[step];
+  let moving = false;
+  lift = lift.map((v, i) => { const goal = e.pick.includes(i) ? 1 : 0; const n = calm ? goal : v + (goal - v) * (1 - Math.exp(-dt / 0.12)); if (Math.abs(goal - n) > 0.005) { moving = true; return n; } return goal; });
+  if (t < 1) { t = calm ? 1 : Math.min(1, t + dt / 0.9); moving = true; }
+  draw();
+  if (touring) { clock += dt; if (clock > 3) { clock = 0; select(step + 1); } }
+  frame = visible && (moving || touring) ? requestAnimationFrame(tick) : 0;
+}
+function run() { if (!frame && visible) { last = 0; frame = requestAnimationFrame(tick); } }
+function steer(n) { touring = false; clock = 0; clearTimeout(idle); idle = setTimeout(() => { touring = !still.matches; run(); }, 12000); select(n); }
+new IntersectionObserver((entries) => { visible = entries[entries.length - 1].isIntersecting; if (visible) run(); }, { rootMargin: "120px 0px" }).observe(stage);
+tabs.forEach((b, i) => b.addEventListener("click", () => steer(i)));
+stage.addEventListener("click", () => steer(step + 1));
+stage.addEventListener("keydown", (ev) => {
+  if (ev.key === "ArrowRight") { ev.preventDefault(); steer(step + 1); }
+  if (ev.key === "ArrowLeft") { ev.preventDefault(); steer(step - 1); }
+});
+select(0); t = 1; lift = NUMS.map((_, i) => (EXPRS[0].pick.includes(i) ? 1 : 0)); draw();
+}
+
+
+{
+const root = document.querySelector('[data-fig="l-change"]');
+const stage = root.querySelector(".iso-stage");
+const svg = stage.querySelector("svg");
+const readout = root.querySelector("[data-readout]");
+const P = {"origin":[280.39294811357775,159.10658551418376],"scale":1.4925928857849593,"azimuth":60,"elevation":34};
+const STEPS = [{"code":"nums = [7, 3, 9, 4, 1]","list":[{"id":"a","v":7},{"id":"b","v":3},{"id":"c","v":9},{"id":"d","v":4},{"id":"e","v":1}],"short":"nums has 5 items","say":"a list of 5 items"},{"code":"nums.append(6)","list":[{"id":"a","v":7},{"id":"b","v":3},{"id":"c","v":9},{"id":"d","v":4},{"id":"e","v":1},{"id":"f","v":6}],"short":"append(6): added at the end","say":"append adds to the end"},{"code":"nums.insert(1, 8)","list":[{"id":"a","v":7},{"id":"g","v":8},{"id":"b","v":3},{"id":"c","v":9},{"id":"d","v":4},{"id":"e","v":1},{"id":"f","v":6}],"short":"insert(1, 8): the rest shift right","say":"insert(1, 8): 8 goes in at index 1, the rest shift right"},{"code":"nums.pop()","list":[{"id":"a","v":7},{"id":"g","v":8},{"id":"b","v":3},{"id":"c","v":9},{"id":"d","v":4},{"id":"e","v":1}],"gone":["f"],"short":"pop() returned 6","say":"pop() takes the last item out and returns it: 6"},{"code":"nums.remove(9)","list":[{"id":"a","v":7},{"id":"g","v":8},{"id":"b","v":3},{"id":"d","v":4},{"id":"e","v":1}],"gone":["c"],"short":"remove(9): first 9 deleted","say":"remove(9) deletes the first 9 it finds"},{"code":"nums[0] = 5","list":[{"id":"h","v":5},{"id":"g","v":8},{"id":"b","v":3},{"id":"d","v":4},{"id":"e","v":1}],"gone":["a"],"short":"nums[0] = 5: replaced","say":"nums[0] = 5 replaces the item at index 0"},{"code":"nums.sort()","list":[{"id":"e","v":1},{"id":"b","v":3},{"id":"d","v":4},{"id":"h","v":5},{"id":"g","v":8}],"short":"sort(): same list, in order","say":"sort() puts the same list in order; it returns None"},{"code":"b = nums","list":[{"id":"e","v":1},{"id":"b","v":3},{"id":"d","v":4},{"id":"h","v":5},{"id":"g","v":8}],"alias":true,"short":"b = nums: one list, 2 names","say":"b = nums: a second name for the same list, not a copy"},{"code":"b.append(2)","list":[{"id":"e","v":1},{"id":"b","v":3},{"id":"d","v":4},{"id":"h","v":5},{"id":"g","v":8},{"id":"i","v":2}],"alias":true,"short":"b changed, so nums did too","say":"changing b changes nums: there is only one list"},{"code":"c = nums.copy()","list":[{"id":"e","v":1},{"id":"b","v":3},{"id":"d","v":4},{"id":"h","v":5},{"id":"g","v":8},{"id":"i","v":2}],"alias":true,"copy":[1,3,4,5,8,2],"short":"copy(): a separate list","say":"copy() makes a second, separate list"},{"code":"c.append(99)","list":[{"id":"e","v":1},{"id":"b","v":3},{"id":"d","v":4},{"id":"h","v":5},{"id":"g","v":8},{"id":"i","v":2}],"alias":true,"copy":[1,3,4,5,8,2,99],"short":"c changed; nums did not","say":"c changed; nums did not"}];
+const X0 = -40, Y = -26, COPY_Y = 44, TAG_W = 40, TAG_X = -113;
+const wireTo = function wireTo(P, from, to) {
+  return wireSvg(iso(from, P), iso(to, P), { tone: "mid", size: 1.3 });
+};
+const trayEl = svg.querySelector('[data-part="tray"]'), tagsEl = svg.querySelector('[data-part="tags"]'), blocksEl = svg.querySelector('[data-part="blocks"]'), copyEl = svg.querySelector('[data-part="copy"]');
+const lines = [...root.querySelectorAll("[data-line]")], out = root.querySelector("[data-out]");
+const still = matchMedia("(prefers-reduced-motion: reduce)");
+let step = 0, blocks = {}, copyShown = 0, touring = !still.matches, visible = false, frame = 0, last = 0, idle = 0, clock = 0;
+const fmt = (a) => "[" + a.join(", ") + "]";
+function select(to) {
+  step = (to + STEPS.length) % STEPS.length;
+  const s = STEPS[step], prev = STEPS[step - 1];
+  const now = new Set(s.list.map((b) => b.id));
+  if (step === 0) blocks = {};
+  s.list.forEach((b, i) => {
+    const tx = X0 + i * G.PITCH;
+    if (!blocks[b.id]) blocks[b.id] = { v: b.v, x: tx, z: 34, a: 0 };
+    Object.assign(blocks[b.id], { tx, tz: 0, ta: 1, fresh: !prev || !prev.list.some((p) => p.id === b.id) });
+  });
+  Object.keys(blocks).forEach((id) => { if (!now.has(id)) Object.assign(blocks[id], { tz: 34, ta: 0, fresh: false }); });
+  lines.forEach((el, i) => { el.toggleAttribute("data-on", i === step); el.toggleAttribute("data-done", i < step); });
+  readout.textContent = s.short;
+  const vals = s.list.map((b) => b.v);
+  out.textContent = "# " + s.say + "\n" + "nums = " + fmt(vals) + (s.alias ? "\nb    = " + fmt(vals) + "   (same list as nums)" : "") + (s.copy ? "\nc    = " + fmt(s.copy) + "   (its own list)" : "");
+  const n = s.list.length;
+  trayEl.innerHTML = traySvg(P, G, X0, n, Y);
+  let tags = tagSvg(P, TAG_X, Y - 2, "nums", TAG_W) + wireTo(P, [TAG_X + TAG_W, Y - 2, 0], [X0 - G.PITCH / 2 + 3, Y - 2, 0]);
+  if (s.alias) tags += tagSvg(P, TAG_X, Y + 24, "b", TAG_W) + wireTo(P, [TAG_X + TAG_W, Y + 24, 0], [X0 - G.PITCH / 2 + 3, Y + 14, 0]);
+  tagsEl.innerHTML = tags;
+  if (s.copy) {
+    copyEl.innerHTML = tagSvg(P, TAG_X, COPY_Y - 2, "c", TAG_W) + wireTo(P, [TAG_X + TAG_W, COPY_Y - 2, 0], [X0 - G.PITCH / 2 + 3, COPY_Y - 2, 0]) + traySvg(P, G, X0, s.copy.length, COPY_Y) +
+      s.copy.map((v, i) => blockSvg(P, G, X0 + i * G.PITCH, COPY_Y, 0, String(v), { lit: step === STEPS.length - 1 && i === s.copy.length - 1 })).join("");
+  } else copyEl.innerHTML = "";
+  run();
+}
+function draw() {
+  const s = STEPS[step];
+  const list = Object.entries(blocks).sort((p, q) => p[1].x - q[1].x);
+  blocksEl.innerHTML = list.map(([id, b]) => {
+    const anyFresh = Object.values(blocks).some((o) => o.fresh && o.ta === 1);
+    const html = blockSvg(P, G, b.x, Y, b.z, String(b.v), { lit: b.fresh, dim: anyFresh && !b.fresh });
+    return b.a < 0.999 ? '<g opacity="' + b.a.toFixed(3) + '">' + html + "</g>" : html;
+  }).join("");
+}
+function tick(now) {
+  const dt = last ? Math.min((now - last) / 1000, 1 / 30) : 1 / 60;
+  last = now;
+  const calm = still.matches;
+  let moving = false;
+  const f = (v, goal, tau) => { const n = calm ? goal : v + (goal - v) * (1 - Math.exp(-dt / tau)); if (Math.abs(goal - n) > 0.01) { moving = true; return n; } return goal; };
+  for (const [id, b] of Object.entries(blocks)) {
+    b.x = f(b.x, b.tx, 0.22); b.z = f(b.z, b.tz, 0.18); b.a = f(b.a, b.ta, 0.16);
+    if (b.ta === 0 && b.a === 0) delete blocks[id];
+  }
+  draw();
+  if (touring) { clock += dt; if (clock > 3.2) { clock = 0; select(step + 1); } }
+  frame = visible && (moving || touring) ? requestAnimationFrame(tick) : 0;
+}
+function run() { if (!frame && visible) { last = 0; frame = requestAnimationFrame(tick); } }
+function steer(d) { touring = false; clock = 0; clearTimeout(idle); idle = setTimeout(() => { touring = !still.matches; run(); }, 12000); select(step + d); }
+new IntersectionObserver((entries) => { visible = entries[entries.length - 1].isIntersecting; if (visible) run(); }, { rootMargin: "120px 0px" }).observe(stage);
+stage.addEventListener("click", () => steer(1));
+stage.addEventListener("keydown", (ev) => {
+  if (ev.key === "ArrowRight" || ev.key === " " || ev.key === "Enter") { ev.preventDefault(); steer(1); }
+  if (ev.key === "ArrowLeft") { ev.preventDefault(); steer(-1); }
+});
+root.querySelectorAll("[data-step]").forEach((b) => b.addEventListener("click", () => steer(Number(b.dataset.step))));
+select(0);
+for (const b of Object.values(blocks)) { b.z = 0; b.a = 1; b.fresh = false; }
+draw();
+}
+
+
+{
+const root = document.querySelector('[data-fig="l-comp"]');
+const stage = root.querySelector(".iso-stage");
+const svg = stage.querySelector("svg");
+const readout = root.querySelector("[data-readout]");
+const P = {"origin":[365.01006156779437,202.5003558387053],"scale":1.525305114502569,"azimuth":60,"elevation":34};
+const PROGRAMS = [{"name":"double","expr":"n * 2","test":null,"src":"nums","v":"n","show":["7","3","9","4","1"],"passes":[true,true,true,true,true],"results":["14","6","18","8","2"],"tests":["","","","",""],"code":"[n * 2 for n in nums]","loop":["result = []","for n in nums:","    result.append(n * 2)"]},{"name":"filter","expr":"n","test":"n > 4","src":"nums","v":"n","show":["7","3","9","4","1"],"passes":[true,false,true,false,false],"results":["7","3","9","4","1"],"tests":["7 > 4","3 > 4","9 > 4","4 > 4","1 > 4"],"code":"[n for n in nums if n > 4]","loop":["result = []","for n in nums:","    if n > 4:","        result.append(n)"]},{"name":"both","expr":"n * n","test":"n % 2 == 1","src":"nums","v":"n","show":["7","3","9","4","1"],"passes":[true,true,true,false,true],"results":["49","9","81","16","1"],"tests":["7 % 2 == 1","3 % 2 == 1","9 % 2 == 1","4 % 2 == 1","1 % 2 == 1"],"code":"[n * n for n in nums if n % 2 == 1]","loop":["result = []","for n in nums:","    if n % 2 == 1:","        result.append(n * n)"]},{"name":"if-else","expr":"\"even\" if n % 2 == 0 else \"odd\"","test":null,"src":"nums","v":"n","show":["7","3","9","4","1"],"passes":[true,true,true,true,true],"results":["'odd'","'odd'","'odd'","'even'","'odd'"],"tests":["","","","",""],"code":"[\"even\" if n % 2 == 0 else \"odd\" for n in nums]","loop":["result = []","for n in nums:","    result.append(\"even\" if n % 2 == 0 else \"odd\")"]},{"name":"strings","expr":"w.upper()","test":null,"src":"words","v":"w","show":["'hi'","'list'","'py'"],"passes":[true,true,true],"results":["'HI'","'LIST'","'PY'"],"tests":["","",""],"code":"[w.upper() for w in words]","loop":["result = []","for w in words:","    result.append(w.upper())"]}];
+const X0 = -60, SRC_Y = -80, IF_Y = -30, EX_Y = 14, OUT_Y = 60, PAD_X = -56, TAG_W = 74, TAG_X = -157;
+const padSvg = function padSvg(P, y, text, active) {
+  return (
+    tagSvg(P, TAG_X, y, text, TAG_W, active ? "hi" : "mid") +
+    solidSvg(cylinder(PAD_X, y, 17, -4, 4, P, 56, 0.6), { tone: "mid" }) +
+    lineSvg(ring(PAD_X, y, 13.5, 0, P, 48), { tone: active ? "hi" : "lo" })
+  );
+};
+const srcEl = svg.querySelector('[data-part="src"]'), padsEl = svg.querySelector('[data-part="pads"]'), outEl = svg.querySelector('[data-part="out"]'), flyEl = svg.querySelector('[data-part="fly"]');
+const tabs = [...root.querySelectorAll("[data-prog]")], compEl = root.querySelector("[data-comp]"), loopEl = root.querySelector("[data-loop]"), outText = root.querySelector("[data-out]");
+const still = matchMedia("(prefers-reduced-motion: reduce)");
+const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+const ease = (u) => (u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2);
+const DUR = { go: 0.7, test: 0.7, hop: 0.5, reject: 0.6, make: 0.6, land: 0.6 };
+let prog = 2, item = 0, phase = "go", t = 0, result = [], done = false, wait = 0, touring = !still.matches, visible = false, frame = 0, last = 0, idle = 0, padKey = "";
+function load(n) {
+  prog = (n + PROGRAMS.length) % PROGRAMS.length;
+  const p = PROGRAMS[prog];
+  item = 0; phase = "go"; t = 0; result = []; done = false; wait = 0; padKey = "";
+  tabs.forEach((b, i) => b.setAttribute("aria-selected", String(i === prog)));
+  const ifPart = p.test ? ' <span class="cp-if">if ' + esc(p.test) + "</span>" : "";
+  compEl.innerHTML = 'result = [<span class="cp-ex">' + esc(p.expr) + '</span> <span class="cp-for">for ' + p.v + " in " + p.src + "</span>" + ifPart + "]";
+  loopEl.innerHTML = p.loop.map((l, i) => '<span data-line="' + i + '">' + esc(l) + "</span>").join("\n");
+  readout.textContent = p.code;
+  outText.textContent = "result = []";
+  run();
+}
+function mark(line) { loopEl.querySelectorAll("[data-line]").forEach((el, i) => el.toggleAttribute("data-on", i === line)); }
+function draw() {
+  const p = PROGRAMS[prog], n = p.show.length;
+  const sx = X0 + ((5 - n) * G.PITCH) / 2;
+  srcEl.innerHTML = tagSvg(P, TAG_X, SRC_Y, "for " + p.v + " in " + p.src, TAG_W, !done && phase === "go" ? "hi" : "mid") + traySvg(P, G, sx, n, SRC_Y, { indices: false }) +
+    p.show.map((v, i) => blockSvg(P, G, sx + i * G.PITCH, SRC_Y, 0, v, { dim: done || i < item || (i === item && phase !== "go") })).join("");
+  const onIf = !done && (phase === "test" || phase === "reject"), onEx = !done && (phase === "hop" || phase === "make");
+  const pk = prog + "|" + onIf + "|" + onEx + "|" + done;
+  if (pk !== padKey) { padKey = pk; padsEl.innerHTML = padSvg(P, IF_Y, p.test ? "if " + p.test : "(no if: keep all)", onIf) + padSvg(P, EX_Y, p.expr, onEx); }
+  const m = Math.max(result.length, 1);
+  outEl.innerHTML = tagSvg(P, TAG_X, OUT_Y, "result =", TAG_W, !done && phase === "land" ? "hi" : "mid") + traySvg(P, G, X0, Math.max(result.length, 0), OUT_Y, { indices: result.length > 0 }) +
+    result.map((v, j) => blockSvg(P, G, X0 + j * G.PITCH, OUT_Y, 0, v)).join("");
+  let fly = "";
+  if (!done) {
+    const u = ease(Math.min(1, t / DUR[phase]));
+    const from = [sx + item * G.PITCH, SRC_Y], ifp = [PAD_X, IF_Y], ex = [PAD_X, EX_Y], slot = [X0 + result.length * G.PITCH, OUT_Y];
+    const lerp = (a, b, s, h) => [a[0] + (b[0] - a[0]) * s, a[1] + (b[1] - a[1]) * s, Math.sin(s * Math.PI) * h];
+    let at = null, text = p.show[item], alpha = 1;
+    if (phase === "go") at = lerp(from, ifp, u, 14);
+    else if (phase === "test") at = [ifp[0], ifp[1], 0];
+    else if (phase === "reject") { at = [ifp[0], ifp[1], -14 * u]; alpha = 1 - u; }
+    else if (phase === "hop") at = lerp(ifp, ex, u, 8);
+    else if (phase === "make") { at = [ex[0], ex[1], 0]; if (t > DUR.make * 0.35) text = p.results[item]; }
+    else if (phase === "land") { at = lerp(ex, slot, u, 12); text = p.results[item]; }
+    const b = blockSvg(P, G, at[0], at[1], at[2], text, { lit: true });
+    fly = alpha < 1 ? '<g opacity="' + alpha.toFixed(3) + '">' + b + "</g>" : b;
+  }
+  flyEl.innerHTML = fly;
+}
+function say() {
+  const p = PROGRAMS[prog];
+  if (done) { readout.textContent = p.code + " → done"; mark(-1); return; }
+  const v = p.show[item];
+  if (phase === "go") { readout.textContent = p.v + " = " + v; mark(1); }
+  else if (phase === "test" || phase === "reject") { readout.textContent = p.tests[item] + " → " + (p.passes[item] ? "True" : "False, skip"); mark(2); }
+  else if (phase === "hop" || phase === "make" || phase === "land") { readout.textContent = p.expr + " → " + p.results[item]; mark(p.test ? 3 : 2); }
+}
+function next() {
+  const p = PROGRAMS[prog];
+  if (phase === "go") phase = p.test ? "test" : "hop";
+  else if (phase === "test") phase = p.passes[item] ? "hop" : "reject";
+  else if (phase === "hop") phase = "make";
+  else if (phase === "make") phase = "land";
+  else if (phase === "land" || phase === "reject") {
+    if (phase === "land") { result.push(p.results[item]); outText.textContent = "result = [" + result.join(", ") + "]"; }
+    item++; phase = "go";
+    if (item >= p.show.length) { done = true; }
+  }
+  t = 0;
+}
+function tick(now) {
+  const dt = last ? Math.min((now - last) / 1000, 1 / 30) : 1 / 60;
+  last = now;
+  if (!done) { t += still.matches ? DUR[phase] : dt; if (t >= DUR[phase]) next(); }
+  else if (touring) { wait += dt; if (wait > 2.4) load(prog + 1); }
+  say(); draw();
+  frame = visible && (!done || touring) ? requestAnimationFrame(tick) : 0;
+}
+function run() { if (!frame && visible) { last = 0; frame = requestAnimationFrame(tick); } }
+function steer(n) { touring = false; clearTimeout(idle); idle = setTimeout(() => { touring = !still.matches; run(); }, 15000); load(n); }
+new IntersectionObserver((entries) => { visible = entries[entries.length - 1].isIntersecting; if (visible) run(); }, { rootMargin: "120px 0px" }).observe(stage);
+tabs.forEach((b, i) => b.addEventListener("click", () => steer(i)));
+stage.addEventListener("click", () => steer(prog + 1));
+stage.addEventListener("keydown", (ev) => {
+  const n = Number(ev.key);
+  if (n >= 1 && n <= PROGRAMS.length) { ev.preventDefault(); steer(n - 1); }
+  if (ev.key === "ArrowRight") { ev.preventDefault(); steer(prog + 1); }
+  if (ev.key === "ArrowLeft") { ev.preventDefault(); steer(prog - 1); }
+});
+load(2); draw();
+}
+</script></body></html>
